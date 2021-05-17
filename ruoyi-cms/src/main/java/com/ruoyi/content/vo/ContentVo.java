@@ -41,11 +41,13 @@ public class ContentVo {
 	@Excel(name = "图标")
 	@ApiModelProperty("图标")
 	private String icon;
+	@Excel(name = "图标路径")
 	private String iconPath;
 	/** banner图 */
 	@Excel(name = "banner图")
 	@ApiModelProperty("banner图")
 	private String banner;
+	@Excel(name = "banner图路径")
 	private String bannerPath;
 	/** 关键字 */
 	@Excel(name = "关键字")

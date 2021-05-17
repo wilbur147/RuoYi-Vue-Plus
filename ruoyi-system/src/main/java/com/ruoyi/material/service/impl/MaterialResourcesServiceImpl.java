@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.annotation.SetFilePath;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.material.domain.MaterialResources;
 import com.ruoyi.material.mapper.MaterialResourcesMapper;
 import com.ruoyi.material.service.IMaterialResourcesService;
@@ -20,6 +22,26 @@ import java.util.List;
  */
 @Service
 public class MaterialResourcesServiceImpl extends ServiceImpl<MaterialResourcesMapper, MaterialResources> implements IMaterialResourcesService {
+
+
+    @Override
+    @SetFilePath
+    public TableDataInfo<MaterialResources> queryPageList(MaterialResources materialResources) {
+        LambdaQueryWrapper<MaterialResources> lqw = Wrappers.lambdaQuery();
+        if (materialResources.getMaterialGroupId() != null){
+            lqw.eq(MaterialResources::getMaterialGroupId ,materialResources.getMaterialGroupId());
+        }
+        if (StringUtils.isNotBlank(materialResources.getResourceName())){
+            lqw.like(MaterialResources::getResourceName ,materialResources.getResourceName());
+        }
+        if (StringUtils.isNotBlank(materialResources.getResourceType())){
+            lqw.eq(MaterialResources::getResourceType ,materialResources.getResourceType());
+        }
+        if (StringUtils.isNotBlank(materialResources.getIsVoid())){
+            lqw.eq(MaterialResources::getIsVoid ,materialResources.getIsVoid());
+        }
+        return PageUtils.buildDataInfo(this.page(PageUtils.buildPage(),lqw));
+    }
 
     @Override
     @SetFilePath

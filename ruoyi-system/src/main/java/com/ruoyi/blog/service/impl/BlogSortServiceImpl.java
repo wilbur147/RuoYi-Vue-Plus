@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.blog.domain.BlogSort;
 import com.ruoyi.blog.mapper.BlogSortMapper;
 import com.ruoyi.blog.service.IBlogSortService;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,19 @@ import java.util.List;
  */
 @Service
 public class BlogSortServiceImpl extends ServiceImpl<BlogSortMapper, BlogSort> implements IBlogSortService {
+
+    @Override
+    public TableDataInfo<BlogSort> queryPageList(BlogSort blogSort) {
+        LambdaQueryWrapper<BlogSort> lqw = Wrappers.lambdaQuery();
+        if (StringUtils.isNotBlank(blogSort.getSortName())){
+            lqw.like(BlogSort::getSortName , blogSort.getSortName());
+        }
+        if (blogSort.getStatus() != null){
+            lqw.eq(BlogSort::getStatus , blogSort.getStatus());
+        }
+        lqw.orderByDesc(BlogSort::getSort);
+        return PageUtils.buildDataInfo(this.page(PageUtils.buildPage(),lqw));
+    }
 
     @Override
     public List<BlogSort> queryList(BlogSort blogSort) {

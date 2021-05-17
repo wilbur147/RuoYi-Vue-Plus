@@ -39,9 +39,7 @@ public class MaterialResourcesController extends BaseController {
     @PreAuthorize("@ss.hasPermi('material:resources:list')")
     @GetMapping("/list")
     public TableDataInfo list(MaterialResources materialResources) {
-        startPage();
-        List<MaterialResources> list = iMaterialResourcesService.queryList(materialResources);
-        return getDataTable(list);
+        return iMaterialResourcesService.queryPageList(materialResources);
     }
 
     /**

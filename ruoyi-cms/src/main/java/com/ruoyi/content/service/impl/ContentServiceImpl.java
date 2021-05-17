@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.annotation.SetFilePath;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.content.bo.ConCategroyQueryBo;
 import com.ruoyi.content.bo.ContentAddBo;
 import com.ruoyi.content.bo.ContentEditBo;
@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 内容Service业务层处理
@@ -49,41 +48,29 @@ public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> impl
 
     @Override
     @SetFilePath(name = {"banner","icon"}, pathValue = {"bannerPath","iconPath"})
-    public List<ContentVo> queryList(ContentQueryBo bo) {
+    public TableDataInfo<ContentVo> queryPageList(ContentQueryBo bo) {
         List<Long> categroyIds = new ArrayList<>();
         // 查询当前分类ID下所有子级分类ID
         if (Validator.isNotEmpty(bo.getCategroyId())){
             List<ConCategroyVo> categroyVos = categroyService.queryAllChildrenList(new ConCategroyQueryBo().setCategroyId(bo.getCategroyId()));
             categroyService.formatListChildrenNodeAsCategroyNode(categroyVos,categroyIds);
         }
-        // 设置分页
-        PageHelper.startPage(bo.getPageNum(), bo.getPageSize());
         LambdaQueryWrapper<Content> lqw = Wrappers.lambdaQuery();
         lqw.eq(bo.getConTopicId() != null, Content::getConTopicId, bo.getConTopicId());
         lqw.inSql(CollUtil.isNotEmpty(categroyIds), Content::getCategroyId, CollUtil.join(categroyIds,","));
         lqw.like(StrUtil.isNotBlank(bo.getContentName()), Content::getContentName, bo.getContentName());
-        lqw.eq(StrUtil.isNotBlank(bo.getStatus()), Content::getStatus, bo.getStatus());
-        return entity2Vo(this.list(lqw));
+        lqw.eq(Validator.isNotEmpty(bo.getStatus()), Content::getStatus, bo.getStatus());
+        return PageUtils.buildDataInfo(this.pageVo(PageUtils.buildPagePlus(),lqw,ContentVo.class));
     }
 
-    /**
-    * 实体类转化成视图对象
-    *
-    * @param collection 实体类集合
-    * @return
-    */
-    private List<ContentVo> entity2Vo(Collection<Content> collection) {
-        List<ContentVo> voList = collection.stream()
-                .map(any -> BeanUtil.toBean(any, ContentVo.class))
-                .collect(Collectors.toList());
-        if (collection instanceof Page) {
-            Page<Content> page = (Page<Content>)collection;
-            Page<ContentVo> pageVo = new Page<>();
-            BeanUtil.copyProperties(page,pageVo);
-            pageVo.addAll(voList);
-            voList = pageVo;
-        }
-        return voList;
+    @Override
+    @SetFilePath(name = {"banner","icon"}, pathValue = {"bannerPath","iconPath"})
+    public List<ContentVo> queryList(ContentQueryBo bo) {
+        LambdaQueryWrapper<Content> lqw = Wrappers.lambdaQuery();
+        lqw.eq(bo.getConTopicId() != null, Content::getConTopicId, bo.getConTopicId());
+        lqw.like(StrUtil.isNotBlank(bo.getContentName()), Content::getContentName, bo.getContentName());
+        lqw.eq(Validator.isNotEmpty(bo.getStatus()), Content::getStatus, bo.getStatus());
+        return this.listVo(lqw, ContentVo.class);
     }
 
     @Override

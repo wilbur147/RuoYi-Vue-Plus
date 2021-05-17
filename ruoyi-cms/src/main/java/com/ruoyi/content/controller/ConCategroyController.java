@@ -43,9 +43,7 @@ public class ConCategroyController extends BaseController {
     @PreAuthorize("@ss.hasPermi('content:categroy:list')")
     @GetMapping("/list")
     public TableDataInfo<ConCategroyVo> list(ConCategroyQueryBo bo) {
-        startPage();
-        List<ConCategroyVo> list = iConCategroyService.queryList(bo);
-        return getDataTable(list);
+        return iConCategroyService.queryPageList(bo);
     }
 
     /**

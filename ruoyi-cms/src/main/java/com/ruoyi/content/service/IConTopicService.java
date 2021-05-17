@@ -1,11 +1,12 @@
 package com.ruoyi.content.service;
 
-import com.ruoyi.content.domain.ConTopic;
-import com.ruoyi.content.vo.ConTopicVo;
-import com.ruoyi.content.bo.ConTopicQueryBo;
+import com.ruoyi.common.core.page.IServicePlus;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.content.bo.ConTopicAddBo;
 import com.ruoyi.content.bo.ConTopicEditBo;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoyi.content.bo.ConTopicQueryBo;
+import com.ruoyi.content.domain.ConTopic;
+import com.ruoyi.content.vo.ConTopicVo;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,12 +17,18 @@ import java.util.List;
  * @author ruoyi
  * @date 2021-05-12
  */
-public interface IConTopicService extends IService<ConTopic> {
+public interface IConTopicService extends IServicePlus<ConTopic> {
 	/**
 	 * 查询单个
 	 * @return
 	 */
 	ConTopicVo queryById(Long conTopicId);
+
+	/**
+	 * 分页查询列表
+	 */
+	TableDataInfo<ConTopicVo> queryPageList(ConTopicQueryBo bo);
+
 
 	/**
 	 * 查询列表

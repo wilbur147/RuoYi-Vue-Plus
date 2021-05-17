@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.ruoyi.common.annotation.SetFilePath;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.file.entity.FileUploader;
 import com.ruoyi.file.service.IFileUploaderService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 public class FilePathAspect {
 
   public final String DATA = "data";
+  public final String ROWS = "rows";
 
   @Autowired
   private IFileUploaderService fileUploaderService;
@@ -67,6 +69,10 @@ public class FilePathAspect {
       }
       if (jsonResult instanceof AjaxResult){
         jsonResult = BeanUtil.getFieldValue(jsonResult, DATA);
+      }
+
+      if (jsonResult instanceof TableDataInfo){
+        jsonResult = BeanUtil.getFieldValue(jsonResult, ROWS);
       }
 
       if (jsonResult instanceof List){

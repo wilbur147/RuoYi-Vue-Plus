@@ -35,9 +35,7 @@ public class MaterialGroupController extends BaseController {
     @PreAuthorize("@ss.hasPermi('material:group:list')")
     @GetMapping("/list")
     public TableDataInfo list(MaterialGroup materialGroup) {
-        startPage();
-        List<MaterialGroup> list = iMaterialGroupService.queryList(materialGroup);
-        return getDataTable(list);
+        return iMaterialGroupService.queryPageList(materialGroup);
     }
 
     /**

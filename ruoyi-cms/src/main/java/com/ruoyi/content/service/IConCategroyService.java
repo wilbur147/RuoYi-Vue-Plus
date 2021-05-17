@@ -1,11 +1,12 @@
 package com.ruoyi.content.service;
 
-import com.ruoyi.content.domain.ConCategroy;
-import com.ruoyi.content.vo.ConCategroyVo;
-import com.ruoyi.content.bo.ConCategroyQueryBo;
+import com.ruoyi.common.core.page.IServicePlus;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.content.bo.ConCategroyAddBo;
 import com.ruoyi.content.bo.ConCategroyEditBo;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoyi.content.bo.ConCategroyQueryBo;
+import com.ruoyi.content.domain.ConCategroy;
+import com.ruoyi.content.vo.ConCategroyVo;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,12 +17,18 @@ import java.util.List;
  * @author ruoyi
  * @date 2021-05-12
  */
-public interface IConCategroyService extends IService<ConCategroy> {
+public interface IConCategroyService extends IServicePlus<ConCategroy> {
 	/**
 	 * 查询单个
 	 * @return
 	 */
 	ConCategroyVo queryById(Long conCategroyId);
+
+	/**
+	 * 分页查询列表
+	 */
+	TableDataInfo<ConCategroyVo> queryPageList(ConCategroyQueryBo bo);
+
 
 	/**
 	 * 查询列表

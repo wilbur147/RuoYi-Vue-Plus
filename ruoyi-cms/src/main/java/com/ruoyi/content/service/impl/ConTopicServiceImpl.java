@@ -5,8 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.Page;
 import com.ruoyi.common.annotation.SetFilePath;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.content.bo.ConTopicAddBo;
 import com.ruoyi.content.bo.ConTopicEditBo;
 import com.ruoyi.content.bo.ConTopicQueryBo;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 专题Service业务层处理
@@ -37,30 +37,18 @@ public class ConTopicServiceImpl extends ServiceImpl<ConTopicMapper, ConTopic> i
 
     @Override
     @SetFilePath(name = {"icon"})
+    public TableDataInfo<ConTopicVo> queryPageList(ConTopicQueryBo bo) {
+        LambdaQueryWrapper<ConTopic> lqw = Wrappers.lambdaQuery();
+        lqw.like(StrUtil.isNotBlank(bo.getTopicName()), ConTopic::getTopicName, bo.getTopicName());
+        return PageUtils.buildDataInfo(this.pageVo(PageUtils.buildPagePlus(),lqw,ConTopicVo.class));
+    }
+
+    @Override
+    @SetFilePath(name = {"icon"})
     public List<ConTopicVo> queryList(ConTopicQueryBo bo) {
         LambdaQueryWrapper<ConTopic> lqw = Wrappers.lambdaQuery();
         lqw.like(StrUtil.isNotBlank(bo.getTopicName()), ConTopic::getTopicName, bo.getTopicName());
-        return entity2Vo(this.list(lqw));
-    }
-
-    /**
-    * 实体类转化成视图对象
-    *
-    * @param collection 实体类集合
-    * @return
-    */
-    private List<ConTopicVo> entity2Vo(Collection<ConTopic> collection) {
-        List<ConTopicVo> voList = collection.stream()
-                .map(any -> BeanUtil.toBean(any, ConTopicVo.class))
-                .collect(Collectors.toList());
-        if (collection instanceof Page) {
-            Page<ConTopic> page = (Page<ConTopic>)collection;
-            Page<ConTopicVo> pageVo = new Page<>();
-            BeanUtil.copyProperties(page,pageVo);
-            pageVo.addAll(voList);
-            voList = pageVo;
-        }
-        return voList;
+        return this.listVo(lqw, ConTopicVo.class);
     }
 
     @Override

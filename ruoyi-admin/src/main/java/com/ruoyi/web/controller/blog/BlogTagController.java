@@ -35,9 +35,7 @@ public class BlogTagController extends BaseController {
     @PreAuthorize("@ss.hasPermi('blog:tag:list')")
     @GetMapping("/list")
     public TableDataInfo list(BlogTag blogTag) {
-        startPage();
-        List<BlogTag> list = iBlogTagService.queryList(blogTag);
-        return getDataTable(list);
+        return iBlogTagService.queryPageList(blogTag);
     }
 
     /**

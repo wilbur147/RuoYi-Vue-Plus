@@ -43,9 +43,7 @@ public class ConTopicController extends BaseController {
     @PreAuthorize("@ss.hasPermi('content:topic:list')")
     @GetMapping("/list")
     public TableDataInfo<ConTopicVo> list(ConTopicQueryBo bo) {
-        startPage();
-        List<ConTopicVo> list = iConTopicService.queryList(bo);
-        return getDataTable(list);
+        return iConTopicService.queryPageList(bo);
     }
 
     /**

@@ -18,8 +18,8 @@
 * 代码生成选择树表生成即可
 
 关于数据权限
-* @DataScope 注解代码生成仅支持在 Controller list 方法使用
-* 其余方法如要使用 需参考 list 方法实现在 LambdaQueryWrapper 注入数据权限生成的 SQL 语句
+* 参考（用户，角色，部门）列表接口用法
+* 从 bo.getParam().get("dataScope") 即可获取数据权限生成的SQL
 
 ## 新增迭代功能
 * 新增CMS内容模块（目前只有：分类、专题、文章内容）
@@ -29,6 +29,8 @@
 
 ## 修改RuoYi功能
 
+关于vue与boot整合部署  
+* [前端静态资源如何整合到后端访问](https://doc.ruoyi.vip/ruoyi-vue/other/faq.html#前端静态资源如何整合到后端访问)
 * ORM框架 使用 Mybatis-Plus 简化CRUD (目前支持单表生成与树表 不支持主子表)
 * Bean简化 使用 Lombok 简化 get set toString 等等
 * 容器改动 Tomcat 改为 并发性能更好的 undertow

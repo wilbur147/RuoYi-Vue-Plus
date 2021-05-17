@@ -5,8 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.pagehelper.Page;
 import com.ruoyi.common.annotation.SetFilePath;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.content.bo.ConCategroyAddBo;
 import com.ruoyi.content.bo.ConCategroyEditBo;
 import com.ruoyi.content.bo.ConCategroyQueryBo;
@@ -20,7 +21,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 分类Service业务层处理
@@ -39,10 +39,18 @@ public class ConCategroyServiceImpl extends ServiceImpl<ConCategroyMapper, ConCa
 
     @Override
     @SetFilePath(name = {"icon"})
+    public TableDataInfo<ConCategroyVo> queryPageList(ConCategroyQueryBo bo) {
+        LambdaQueryWrapper<ConCategroy> lqw = Wrappers.lambdaQuery();
+        lqw.like(StrUtil.isNotBlank(bo.getCategroyName()), ConCategroy::getCategroyName, bo.getCategroyName());
+        return PageUtils.buildDataInfo(this.pageVo(PageUtils.buildPagePlus(),lqw,ConCategroyVo.class));
+    }
+
+    @Override
+    @SetFilePath(name = {"icon"})
     public List<ConCategroyVo> queryList(ConCategroyQueryBo bo) {
         LambdaQueryWrapper<ConCategroy> lqw = Wrappers.lambdaQuery();
         lqw.like(StrUtil.isNotBlank(bo.getCategroyName()), ConCategroy::getCategroyName, bo.getCategroyName());
-        return entity2Vo(this.list(lqw));
+        return this.listVo(lqw, ConCategroyVo.class);
     }
 
     @Override
@@ -62,26 +70,6 @@ public class ConCategroyServiceImpl extends ServiceImpl<ConCategroyMapper, ConCa
                 categroyVo.setChildren(null);
             }
         }
-    }
-
-    /**
-    * 实体类转化成视图对象
-    *
-    * @param collection 实体类集合
-    * @return
-    */
-    private List<ConCategroyVo> entity2Vo(Collection<ConCategroy> collection) {
-        List<ConCategroyVo> voList = collection.stream()
-                .map(any -> BeanUtil.toBean(any, ConCategroyVo.class))
-                .collect(Collectors.toList());
-        if (collection instanceof Page) {
-            Page<ConCategroy> page = (Page<ConCategroy>)collection;
-            Page<ConCategroyVo> pageVo = new Page<>();
-            BeanUtil.copyProperties(page,pageVo);
-            pageVo.addAll(voList);
-            voList = pageVo;
-        }
-        return voList;
     }
 
     @Override

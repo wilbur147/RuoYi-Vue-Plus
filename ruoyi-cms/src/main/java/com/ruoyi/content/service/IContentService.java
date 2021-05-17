@@ -1,11 +1,12 @@
 package com.ruoyi.content.service;
 
-import com.ruoyi.content.domain.Content;
-import com.ruoyi.content.vo.ContentVo;
-import com.ruoyi.content.bo.ContentQueryBo;
+import com.ruoyi.common.core.page.IServicePlus;
+import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.content.bo.ContentAddBo;
 import com.ruoyi.content.bo.ContentEditBo;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoyi.content.bo.ContentQueryBo;
+import com.ruoyi.content.domain.Content;
+import com.ruoyi.content.vo.ContentVo;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author ruoyi
  * @date 2021-05-12
  */
-public interface IContentService extends IService<Content> {
+public interface IContentService extends IServicePlus<Content> {
 	/**
 	 * 查询单个
 	 * @return
@@ -24,7 +25,12 @@ public interface IContentService extends IService<Content> {
 	ContentVo queryById(Long contentId);
 
 	/**
-	 * 查询列表
+	 * 分页查询列表
+	 */
+	TableDataInfo<ContentVo> queryPageList(ContentQueryBo bo);
+
+	/**
+	 * 分页查询列表
 	 */
 	List<ContentVo> queryList(ContentQueryBo bo);
 

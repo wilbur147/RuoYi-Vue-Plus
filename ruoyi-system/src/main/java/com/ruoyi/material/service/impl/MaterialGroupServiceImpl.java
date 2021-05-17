@@ -3,6 +3,8 @@ package com.ruoyi.material.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ruoyi.common.core.page.TableDataInfo;
+import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.material.domain.MaterialGroup;
 import com.ruoyi.material.mapper.MaterialGroupMapper;
 import com.ruoyi.material.service.IMaterialGroupService;
@@ -19,6 +21,18 @@ import java.util.List;
  */
 @Service
 public class MaterialGroupServiceImpl extends ServiceImpl<MaterialGroupMapper, MaterialGroup> implements IMaterialGroupService {
+
+    @Override
+    public TableDataInfo<MaterialGroup> queryPageList(MaterialGroup materialGroup) {
+        LambdaQueryWrapper<MaterialGroup> lqw = Wrappers.lambdaQuery();
+        if (StringUtils.isNotBlank(materialGroup.getGroupName())){
+            lqw.like(MaterialGroup::getGroupName ,materialGroup.getGroupName());
+        }
+        if (StringUtils.isNotBlank(materialGroup.getIsVoid())){
+            lqw.eq(MaterialGroup::getIsVoid ,materialGroup.getIsVoid());
+        }
+        return PageUtils.buildDataInfo(this.page(PageUtils.buildPage(),lqw));
+    }
 
     @Override
     public List<MaterialGroup> queryList(MaterialGroup materialGroup) {

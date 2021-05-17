@@ -35,10 +35,8 @@ public class BlogController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('blog:blog:list')")
     @GetMapping("/list")
-    public TableDataInfo list(Blog blog) {
-        startPage();
-        List<Blog> list = iBlogService.queryList(blog);
-        return getDataTable(list);
+    public TableDataInfo<Blog> list(Blog blog) {
+        return iBlogService.queryPageList(blog);
     }
 
     /**

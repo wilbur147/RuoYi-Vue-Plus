@@ -35,9 +35,7 @@ public class BlogSortController extends BaseController {
     @PreAuthorize("@ss.hasPermi('blog:sort:list')")
     @GetMapping("/list")
     public TableDataInfo list(BlogSort blogSort) {
-        startPage();
-        List<BlogSort> list = iBlogSortService.queryList(blogSort);
-        return getDataTable(list);
+        return iBlogSortService.queryPageList(blogSort);
     }
 
     /**

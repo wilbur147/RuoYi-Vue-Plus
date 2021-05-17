@@ -43,8 +43,7 @@ public class ContentController extends BaseController {
     @PreAuthorize("@ss.hasPermi('content:content:list')")
     @GetMapping("/list")
     public TableDataInfo<ContentVo> list(ContentQueryBo bo) {
-        List<ContentVo> list = iContentService.queryList(bo);
-        return getDataTable(list);
+        return iContentService.queryPageList(bo);
     }
 
     /**
