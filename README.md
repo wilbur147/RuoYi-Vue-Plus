@@ -21,6 +21,12 @@
 * @DataScope 注解代码生成仅支持在 Controller list 方法使用
 * 其余方法如要使用 需参考 list 方法实现在 LambdaQueryWrapper 注入数据权限生成的 SQL 语句
 
+## 新增迭代功能
+* 新增CMS内容模块（目前只有：分类、专题、文章内容）
+* 新增博客板块内容
+* 新增素材库，其它模块上传（图片、视频、音频等）内容可直接选择素材库
+* 新增公共文件上传下载模块
+
 ## 修改RuoYi功能
 
 * ORM框架 使用 Mybatis-Plus 简化CRUD (目前支持单表生成与树表 不支持主子表)
@@ -38,9 +44,6 @@
 * 增加demo模块示例(给不会增加模块的小伙伴做参考)
 * 同步升级 3.4.0
 * 单模块 fast 分支 https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/tree/fast/
-
-## 关注作者(扫码加群)
-![](https://images.gitee.com/uploads/images/2021/0508/235345_5503356a_1766278.jpeg)
 
 ## 平台简介
 
