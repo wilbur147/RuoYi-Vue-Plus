@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.blog.mapper.BlogMapper">
+    
+    <resultMap type="Blog" id="RyBlogResult">
+        <result property="blogId"    column="blog_id"    />
+        <result property="title"    column="title"    />
+        <result property="summary"    column="summary"    />
+        <result property="content"    column="content"    />
+        <result property="blogTagId"    column="blog_tag_id"    />
+        <result property="blogSortId"    column="blog_sort_id"    />
+        <result property="clickCount"    column="click_count"    />
+        <result property="fileUniqueId"    column="file_unique_id"    />
+        <result property="status"    column="status"    />
+        <result property="author"    column="author"    />
+        <result property="articlesPart"    column="articles_part"    />
+        <result property="isOriginal"    column="is_original"    />
+        <result property="isPublish"    column="is_publish"    />
+        <result property="sort"    column="sort"    />
+        <result property="openComment"    column="open_comment"    />
+        <result property="type"    column="type"    />
+        <result property="editorType"    column="editor_type"    />
+        <result property="outsideLink"    column="outside_link"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+
+</mapper>

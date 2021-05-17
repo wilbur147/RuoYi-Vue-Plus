@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.content.mapper.ConCategroyMapper">
+
+    <sql id="Base_Column_List">
+	con_categroy_id,
+	parent_id,
+	categroy_name,
+	icon,
+	order_num,
+	description,
+	create_by,
+	create_time,
+	update_by,
+	update_time,
+	remark
+</sql>
+    <resultMap type="com.ruoyi.content.domain.ConCategroy" id="ConCategroyResult">
+        <result property="categroyId" column="con_categroy_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="categroyName" column="categroy_name"/>
+        <result property="icon" column="icon"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="description" column="description"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <resultMap type="com.ruoyi.content.vo.ConCategroyVo" id="CategroyResultNext">
+        <result property="categroyId" column="con_categroy_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="categroyName" column="categroy_name"/>
+        <result property="icon" column="icon"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="createTime" column="create_time"/>
+        <!-- next -->
+        <discriminator javaType="INTEGER" column="number">
+            <case value="1">
+                <collection property="children" ofType="com.ruoyi.content.vo.ConCategroyVo" fetchType="lazy"
+                            select="getNextNodeTree" column="{conCategroyId=con_categroy_id}"/>
+            </case>
+        </discriminator>
+    </resultMap>
+
+
+    <select id="selectAll" resultMap="CategroyResultNext">
+        select
+        con_categroy_id, parent_id, categroy_name, icon, order_num, create_time,
+        (select case when count(temp.con_categroy_id) > 0 then 1 else 0 end from ry_con_categroy temp
+        where temp.parent_id = rcc.con_categroy_id
+        ) as number
+        from ry_con_categroy rcc
+        <trim prefix="where" prefixOverrides="and">
+            <if test="categroyName != null and categroyName != ''">
+                and rcc.categroy_name like concat('%',#{categroyName},'%')
+            </if>
+            <if test="categroyId != null">
+                and rcc.con_categroy_id = #{categroyId}
+            </if>
+            <if test="categroyId == null">
+                and rcc.parent_id = 0
+            </if>
+        </trim>
+        order by rcc.order_num
+    </select>
+
+    <!--查询所有分类的子级-->
+    <select id="getNextNodeTree" resultMap="CategroyResultNext">
+        SELECT con_categroy_id, parent_id, categroy_name, icon, order_num, create_time,
+        (select case when count(temp.con_categroy_id) > 0 then 1 else 0 end from ry_con_categroy temp
+        where temp.parent_id = rcc.con_categroy_id
+        ) as number
+        from ry_con_categroy rcc
+        WHERE rcc.parent_id = #{conCategroyId,jdbcType=BIGINT}
+        order by rcc.order_num
+    </select>
+
+
+</mapper>

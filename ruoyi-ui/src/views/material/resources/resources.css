@@ -1,0 +1,30 @@
+.checkbox {
+  position: absolute;
+  z-index: 100;
+  left: 10px;
+  top: 7px;
+  cursor: pointer;
+}
+
+.resName {
+  font-size: 20px;
+  margin: 20px auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 80%;
+  cursor:pointer;
+  margin-top: 25px;
+}
+
+.update-time-span {
+  font-size: 13px;
+  float: left;
+  margin: 6px 13px;
+}
+
+.void-switch {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.file.mapper.FileUploaderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ruoyi.file.entity.FileUploader">
+        <id column="file_id" property="fileId" />
+        <result column="unique_id" property="uniqueId" />
+        <result column="storage_type" property="storageType" />
+        <result column="upload_type" property="uploadType" />
+        <result column="original_file_name" property="originalFileName" />
+        <result column="file_size" property="fileSize" />
+        <result column="suffix" property="suffix" />
+        <result column="file_path" property="filePath" />
+        <result column="full_file_path" property="fullFilePath" />
+        <result column="file_hash" property="fileHash" />
+        <result column="upload_start_time" property="uploadStartTime" />
+        <result column="upload_end_time" property="uploadEndTime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        file_id, unique_id, storage_type, upload_type, original_file_name, file_size, suffix, file_path, full_file_path, file_hash, upload_start_time, upload_end_time, create_time, update_time
+    </sql>
+
+    <select id="selectPropertyByUniqueIds" resultMap="BaseResultMap">
+        select
+        file_id, unique_id, full_file_path, file_path, suffix, storage_type
+        from file_uploader
+        where unique_id in
+        <foreach collection="uniqueIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item, jdbcType=VARCHAR}
+        </foreach>
+        <if test="priorityShow != null and priorityShow != ''">
+            and storage_type = #{priorityShow}
+        </if>
+    </select>
+
+    <select id="selectAllByUniqueId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from file_uploader
+        where unique_id=#{uniqueId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllByUniqueIdAndStorageType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from file_uploader
+        where unique_id=#{uniqueId} and storage_type=#{storageType}
+    </select>
+
+</mapper>

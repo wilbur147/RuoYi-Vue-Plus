@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.material.mapper.MaterialResourcesMapper">
+    
+    <resultMap type="MaterialResources" id="MaterialResourcesResult">
+        <result property="materialResourcesId"    column="material_resources_id"    />
+        <result property="materialGroupId"    column="material_group_id"    />
+        <result property="fileUniqueId"    column="file_unique_id"    />
+        <result property="resourceName"    column="resource_name"    />
+        <result property="resourceType"    column="resource_type"    />
+        <result property="summary"    column="summary"    />
+        <result property="isVoid"    column="is_void"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+
+</mapper>
