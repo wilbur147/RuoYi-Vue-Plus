@@ -1,7 +1,7 @@
 # 项目相关配置
 ruoyi:
-    # 文件路径 示例（ Windows配置D:/uploadPath，Linux配置 /wilbur/blog_code/uploadPath）
-    profile: /wilbur/blog_code/uploadPath
+    # 文件路径 示例（ Windows配置D:/uploadPath，Linux配置 /wilbur/tmp/uploadPath）
+    profile: /tmp/uploadPath
 
 # 数据源配置
 spring:
@@ -11,9 +11,9 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://121.36.94.1:3306/ruoyi?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true
-                username: root
-                password: TONGsu123
+                url: jdbc:mysql://106.14.243.170:3306/ruoyi?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true
+                username: ruoyi
+                password: tHmpdAL243LkeRnz
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭

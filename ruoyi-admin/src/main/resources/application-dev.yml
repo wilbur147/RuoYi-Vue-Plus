@@ -12,9 +12,9 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://121.36.94.1:3306/ruoyi?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true
-                username: root
-                password: TONGsu123
+                url: jdbc:mysql://106.14.243.170:3306/ruoyi?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true
+                username: ruoyi
+                password: tHmpdAL243LkeRnz
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭
