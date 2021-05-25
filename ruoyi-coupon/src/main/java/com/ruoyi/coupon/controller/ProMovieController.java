@@ -152,6 +152,15 @@ public class ProMovieController extends BaseController {
                 .execute().body();
         return JSONUtil.parseObj(result);
     }
+	
+	    /**
+     * 获取影票CPS链接
+     */
+    @ApiOperation("获取影票CPS链接")
+    @GetMapping("/movieBuy")
+    public AjaxResult "/movieBuy"(){
+        return AjaxResult.success("获取影票链接成功","https://dwz.cn/D9fEVtaK");
+    }
 
 
     /**
