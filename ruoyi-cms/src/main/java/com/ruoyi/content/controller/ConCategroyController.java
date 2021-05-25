@@ -4,7 +4,6 @@ import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.annotation.SetFilePath;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.content.bo.ConCategroyAddBo;
@@ -42,8 +41,8 @@ public class ConCategroyController extends BaseController {
     @ApiOperation("查询分类列表")
     @PreAuthorize("@ss.hasPermi('content:categroy:list')")
     @GetMapping("/list")
-    public TableDataInfo<ConCategroyVo> list(ConCategroyQueryBo bo) {
-        return iConCategroyService.queryPageList(bo);
+    public AjaxResult<List<ConCategroyVo>> list(ConCategroyQueryBo bo) {
+        return AjaxResult.success(iConCategroyService.queryList(bo));
     }
 
     /**

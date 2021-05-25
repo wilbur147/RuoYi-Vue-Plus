@@ -1,7 +1,7 @@
-package com.ruoyi.demo.feign.fallback;
+package com.ruoyi.coupon.feign.fallback;
 
 
-import com.ruoyi.demo.feign.FeignTestService;
+import com.ruoyi.coupon.feign.FeignTestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

@@ -98,18 +98,18 @@
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="内容主键ID" align="center" prop="contentId" v-if="false"/>
           <el-table-column label="标题名称" align="center" prop="contentName" />
-          <el-table-column label="封面图" width="160" align="center" prop="icon" >
-            <template slot-scope="scope">
-              <el-image
-                :src="scope.row.iconPath"
-                style="width: 130px;height: 70px;"
-              />
-            </template>
-           </el-table-column>
           <el-table-column label="封面图" width="160" align="center" prop="banner" >
             <template slot-scope="scope">
               <el-image
                 :src="scope.row.bannerPath"
+                style="width: 130px;height: 70px;"
+              />
+            </template>
+           </el-table-column>
+          <el-table-column label="图标" width="160" align="center" prop="icon" >
+            <template slot-scope="scope">
+              <el-image
+                :src="scope.row.iconPath"
                 style="width: 130px;height: 70px;"
               />
             </template>

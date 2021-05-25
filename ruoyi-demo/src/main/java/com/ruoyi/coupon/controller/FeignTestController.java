@@ -1,7 +1,7 @@
-package com.ruoyi.demo.controller;
+package com.ruoyi.coupon.controller;
 
 import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.demo.feign.FeignTestService;
+import com.ruoyi.coupon.feign.FeignTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

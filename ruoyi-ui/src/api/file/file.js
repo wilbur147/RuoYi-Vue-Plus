@@ -19,3 +19,12 @@ export function delFile(uniqueIds) {
     method: 'delete'
   })
 }
+
+
+// 删除文件
+export function getFileInfo(uniqueId) {
+  return request({
+    url: '/fileUploader/getFileInfo/' + uniqueId,
+    method: 'get'
+  })
+}

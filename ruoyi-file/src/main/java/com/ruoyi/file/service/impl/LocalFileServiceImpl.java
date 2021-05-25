@@ -17,16 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.FileCopyUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+
 
 /**
  * <p>
@@ -56,11 +55,10 @@ public class LocalFileServiceImpl implements ILocalFileService {
                 uploadType.endsWith("/") ? uploadType : uploadType + "/";
         String realPath = uploadType + FileUploadUtil.createNewFileName(fileUploader.getOriginalFileName());
         String rootPath = this.localFilePath + realPath;
-        FileUploadUtil.checkFilePath(rootPath);
+        log.info("本地文件上传路径：" + rootPath);
         try (InputStream uploadIs = FileUploadUtil.clone(is);
-             InputStream fileHashIs = FileUploadUtil.clone(is);
-             FileOutputStream fos = new FileOutputStream(rootPath)) {
-            FileCopyUtils.copy(uploadIs, fos);
+             InputStream fileHashIs = FileUploadUtil.clone(is)){
+            FileUtil.writeFromStream(uploadIs,rootPath);
             fileUploader.setStorageType(SystemConfigConstants.SYS_FILE_PRIORITY_LOCAL);
             fileUploader.setUploadStartTime(startTime);
             fileUploader.setUploadEndTime(new Date());
@@ -70,6 +68,7 @@ public class LocalFileServiceImpl implements ILocalFileService {
             // 上传文件信息到数据库
             fileUploaderMapper.insert(fileUploader);
         } catch (Exception e) {
+
             log.error("method: upload line: 【60行】发生的异常是",e);
             throw new RuntimeException("本地文件上传失败");
         } finally {

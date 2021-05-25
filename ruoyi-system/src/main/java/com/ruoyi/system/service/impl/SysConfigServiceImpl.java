@@ -255,4 +255,6 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             configs.forEach(this::saveConfig);
         }
     }
+
+
 }

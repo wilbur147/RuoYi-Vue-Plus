@@ -12,6 +12,7 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+
 /**
  * @author Ruoyi
  * @Description
@@ -19,7 +20,6 @@ import java.nio.charset.StandardCharsets;
  **/
 public class FileUploadUtil
 {
-
 
     /**
      * 编码文件名

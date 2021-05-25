@@ -215,6 +215,12 @@
                 <artifactId>ruoyi-cms</artifactId>
                 <version>${ruoyi-vue-plus.version}</version>
             </dependency>
+            <!-- cms模块 -->
+            <dependency>
+                <groupId>com.ruoyi</groupId>
+                <artifactId>ruoyi-coupon</artifactId>
+                <version>${ruoyi-vue-plus.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -229,6 +235,7 @@
         <module>ruoyi-demo</module>
         <module>ruoyi-file</module>
         <module>ruoyi-cms</module>
+        <module>ruoyi-coupon</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -26,7 +26,7 @@ captcha:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 6002
+  port: 6001
   servlet:
     # 应用的访问路径
     context-path: /
@@ -97,7 +97,6 @@ token:
 # MyBatisPlus配置
 # https://baomidou.com/config/
 mybatis-plus:
-  mapperPackage: com.ruoyi.**.mapper
   # 对应的 XML 文件位置
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 实体扫描，多个package用逗号或者分号分隔

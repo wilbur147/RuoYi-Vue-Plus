@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement(proxyTargetClass = true)
 @Configuration
 // 指定要扫描的Mapper类的包的路径
-@MapperScan("${mybatis-plus.mapperPackage}")
+@MapperScan("com.ruoyi.**.mapper")
 public class MybatisPlusConfig {
 
 	@Bean

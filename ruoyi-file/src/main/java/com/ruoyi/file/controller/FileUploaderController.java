@@ -73,8 +73,8 @@ public class FileUploaderController {
      * @param uniqueId 文件唯一码
      * @return
      */
-    @GetMapping("/getFileInfo")
-    public AjaxResult getFileInfo(@RequestParam(value = "uniqueId") String uniqueId)
+    @GetMapping("/getFileInfo/{uniqueId}")
+    public AjaxResult getFileInfo(@PathVariable("uniqueId") String uniqueId)
     {
         return AjaxResult.success("获取文件信息成功",fileUploaderService.getFileInfo(uniqueId));
     }

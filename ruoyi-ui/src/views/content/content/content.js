@@ -293,7 +293,7 @@ export default {
     getCategroyList() {
       const that = this;
       listCategroy({}).then(response => {
-        const resArr = response.rows;
+        const resArr = response.data;
         if (resArr) {
           this.maxexpandId = resArr[resArr.length - 1].categroyId;
           this.non_maxexpandId = resArr[resArr.length - 1].categroyId;

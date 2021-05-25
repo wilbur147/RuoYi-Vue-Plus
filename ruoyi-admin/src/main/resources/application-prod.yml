@@ -1,7 +1,7 @@
 # 项目相关配置
 ruoyi:
-    # 文件路径 示例（ Windows配置D:/uploadPath，Linux配置 /wilbur/tmp/uploadPath）
-    profile: /tmp/uploadPath
+    # 文件路径 示例（ Windows配置D:/uploadPath，Linux配置 /www/wwwroot/project/platform/uploadPath）
+    profile: /www/wwwroot/project/platform/uploadPath
 
 # 数据源配置
 spring:
@@ -82,3 +82,7 @@ spring:
                 max-active: 8
                 # #连接池最大阻塞等待时间（使用负值表示没有限制）
                 max-wait: -1ms
+    boot:
+        admin:
+            ui:
+                public-url: https://platform.weiye.link/prod-api/admin

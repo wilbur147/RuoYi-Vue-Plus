@@ -63,7 +63,7 @@
 
 <script>
 import { getToken } from "@/utils/auth";
-
+import { getFileInfo } from "@/api/file/file";
 export default {
   data() {
     return {
@@ -122,7 +122,9 @@ export default {
     },
     handleUploadSuccess(res) {
       if (res.code == 200) {
-        this.$emit("input", res.data);
+        getFileInfo(res.data.uniqueId).then(response => {
+          this.$emit("input", response.data);
+        });
       }else{
         this.$message.error('上传失败')
       }

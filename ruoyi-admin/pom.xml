@@ -63,6 +63,11 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-cms</artifactId>
         </dependency>
+        <!--  coupon模块  -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-coupon</artifactId>
+        </dependency>
 
     </dependencies>
 

@@ -180,7 +180,7 @@ export default {
     getList() {
       this.loading = true;
       listCategroy(this.queryParams).then(response => {
-        this.categroyList = this.handleTree(response.rows, "categroyId");
+        this.categroyList = this.handleTree(response.data, "categroyId");
         this.loading = false;
       });
     },
@@ -200,7 +200,7 @@ export default {
       listCategroy().then(response => {
         this.treeOptions = [];
         const menu = { categroyId: 0, categroyName: '主类目', children: [] };
-        menu.children = this.handleTree(response.rows, "categroyId");
+        menu.children = this.handleTree(response.data, "categroyId");
         this.treeOptions.push(menu);
       });
     },

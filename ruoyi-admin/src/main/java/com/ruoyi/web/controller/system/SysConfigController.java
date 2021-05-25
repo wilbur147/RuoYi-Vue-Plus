@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 参数配置 信息操作处理
@@ -123,5 +124,26 @@ public class SysConfigController extends BaseController
     {
         configService.clearCache();
         return AjaxResult.success();
+    }
+
+    /**
+     * 全局配置---查询所有参数值，返回格式  key:value
+     */
+    @PreAuthorize("@ss.hasPermi('system:globalConfig:query')")
+    @GetMapping(value = "/getAll")
+    public AjaxResult getAll(@RequestParam("configKeywords") String configKeywords)
+    {
+        return AjaxResult.success(configService.getAll(configKeywords));
+    }
+
+    /**
+     * 全局配置---修改value值
+     */
+    @PreAuthorize("@ss.hasPermi('system:globalConfig:edit')")
+    @PutMapping(value = "/editValueByKey")
+    public AjaxResult editValueByKey(@RequestBody Map<String,String> editParams)
+    {
+        configService.saveConfig(editParams);
+        return AjaxResult.success("系统配置修改成功");
     }
 }
