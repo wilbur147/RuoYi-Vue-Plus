@@ -21,21 +21,22 @@ public class MallQueryBo {
 	@ApiModelProperty("商城类别")
 	private String cpType;
 	@ApiModelProperty("分页大小")
-	private Integer pageSize;
+	private Integer page_size;
 	@ApiModelProperty("当前页数")
 	private Integer page;
 	@ApiModelProperty("分页标志")
 	private String listId;
 	@ApiModelProperty("分类标签")
-	private Long optId;
+	private Long opt_id;
 	@ApiModelProperty("排序方式")
-	private Integer sortType;
+	private Integer sort_type;
 	@ApiModelProperty("商品goodsSign")
-	private String goodsSign;
+	private String goods_sign;
 	@ApiModelProperty("搜索id")
 	private String searchId;
 	@ApiModelProperty("是否使用个性化推荐")
-	private Boolean useCustomized;
+	private Boolean use_customized;
 	@ApiModelProperty("是否只返回优惠券的商品")
-	private Boolean withCoupon;
+	private Boolean with_coupon;
+	private String apikey = "607d259324479dcf";
 }

@@ -1,5 +1,12 @@
 package com.ruoyi.coupon.service.impl;
 
+import cn.hutool.core.lang.Validator;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.pdd.pop.sdk.common.util.JsonUtil;
 import com.pdd.pop.sdk.http.PopAccessTokenClient;
 import com.pdd.pop.sdk.http.PopClient;
@@ -18,8 +25,7 @@ import com.ruoyi.coupon.service.IBuyTogetherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Wilbur
@@ -32,6 +38,7 @@ public class BuyTogetherServiceImpl implements IBuyTogetherService {
     private PopClient client = null;
 
 
+    private final String API_URL = "http://api-gw.haojingke.com";
     private final String API_KEY = "607d259324479dcf";
     private final String clientId = "7ab7663101354c5bba76aed3fd2ea310";
     private final String clientSecret = "950208c4ea788f527271a274cf04526ddbf58b7d";
@@ -94,8 +101,24 @@ public class BuyTogetherServiceImpl implements IBuyTogetherService {
 
     @Override
     public AjaxResult buyTogetherMoreList(MallQueryBo bo) {
-
-        return AjaxResult.success();
+        HashMap<String,Object> map = JSONUtil.toBean(JSONUtil.toJsonStr(bo), HashMap.class);
+        StringBuilder sb  = new StringBuilder();
+        sb.append("?");
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (Validator.isNotEmpty(entry.getValue())) {
+                sb.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+            }
+        }
+        sb.deleteCharAt(sb.lastIndexOf("&"));
+        String result= HttpUtil.get(API_URL+"/index.php/v1/api/pdd/goodslist"+sb.toString());
+        System.out.println(result);
+        JSONObject obj = JSONUtil.parseObj(result);
+        if (200 == Integer.parseInt(obj.get("status_code").toString())) {
+            JSONObject data = JSONUtil.parseObj(obj.get("data"));
+            JSONArray goodsList = JSONUtil.parseArray(data.get("goods_list"));
+            return AjaxResult.success(goodsList);
+        }
+        return AjaxResult.error();
     }
 
     @Override
@@ -104,7 +127,7 @@ public class BuyTogetherServiceImpl implements IBuyTogetherService {
 
         PddDdkOauthGoodsDetailRequest request = new PddDdkOauthGoodsDetailRequest();
 //        request.setCustomParameters("str");
-        request.setGoodsSign(bo.getGoodsSign());
+        request.setGoodsSign(bo.getGoods_sign());
 //        request.setPid("str");
         request.setSearchId(bo.getSearchId());
 //        request.setZsDuoId(0L);
@@ -132,7 +155,7 @@ public class BuyTogetherServiceImpl implements IBuyTogetherService {
         request.setGenerateShortUrl(false);
         request.setGenerateWeApp(true);
         List<String> goodsSignList = new ArrayList<>();
-        goodsSignList.add(bo.getGoodsSign());
+        goodsSignList.add(bo.getGoods_sign());
         request.setGoodsSignList(goodsSignList);
         request.setMultiGroup(false);
         request.setPId(PID);
