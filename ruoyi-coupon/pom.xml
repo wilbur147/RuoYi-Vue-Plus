@@ -23,15 +23,6 @@
             <artifactId>ruoyi-common</artifactId>
         </dependency>
 
-        <!-- 拼多多SDK-->
-        <dependency>
-            <groupId>com.pdd.pop.sdk</groupId>
-            <artifactId>pop-sdk</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/pop-sdk-1.10.99-all.jar</systemPath>
-        </dependency>
-
     </dependencies>
 
 </project>

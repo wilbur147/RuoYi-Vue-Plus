@@ -11,17 +11,11 @@ import com.ruoyi.coupon.bo.MallQueryBo;
 public interface IBuyTogetherService {
 
     /**
-     * 拼多多精选商品列表
-     * @return
-     */
-    AjaxResult buyTogetherList(String listId, Integer offset, Integer limit);
-
-    /**
      * 拼多多多类目商品列表
      * @param bo 参数
      * @return
      */
-    AjaxResult buyTogetherMoreList(MallQueryBo bo);
+    AjaxResult buyTogetherList(MallQueryBo bo);
 
     /**
      * 拼多多多商品详情

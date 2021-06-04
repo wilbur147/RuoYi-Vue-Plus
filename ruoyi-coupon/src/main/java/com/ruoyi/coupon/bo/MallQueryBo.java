@@ -24,8 +24,6 @@ public class MallQueryBo {
 	private Integer page_size;
 	@ApiModelProperty("当前页数")
 	private Integer page;
-	@ApiModelProperty("分页标志")
-	private String listId;
 	@ApiModelProperty("分类标签")
 	private Long opt_id;
 	@ApiModelProperty("排序方式")
@@ -38,5 +36,9 @@ public class MallQueryBo {
 	private Boolean use_customized;
 	@ApiModelProperty("是否只返回优惠券的商品")
 	private Boolean with_coupon;
-	private String apikey = "607d259324479dcf";
+
+	@ApiModelProperty("蚂蚁星球KEY")
+	private String apikey;
+	@ApiModelProperty("推广位PID")
+	private String pid;
 }

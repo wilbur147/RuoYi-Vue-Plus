@@ -19,7 +19,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @ApiModel("影票视图对象")
 public class MovieVo {
-	private static final long serialVersionUID = 1L;
 
 	/** 内容影票主键 */
 	@ApiModelProperty("内容影票主键")

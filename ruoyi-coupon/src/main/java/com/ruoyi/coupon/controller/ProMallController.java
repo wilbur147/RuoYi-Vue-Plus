@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/program/mall")
 public class ProMallController extends BaseController {
+    private final String PID = "13957782_210518982";
+    private final String API_KEY = "607d259324479dcf";
 
     @Autowired
     private IBuyTogetherService togetherService;
@@ -39,9 +41,13 @@ public class ProMallController extends BaseController {
         if (StrUtil.isBlank(bo.getCpType())){
             return AjaxResult.error("参数错误");
         }
+        // 赋值自己的key和推广PID
+        bo.setApikey(API_KEY);
+        bo.setPid(PID);
+
         switch (bo.getCpType()){
             case "pdd":
-                return togetherService.buyTogetherMoreList(bo);
+                return togetherService.buyTogetherList(bo);
 
             default:
         }
@@ -57,6 +63,11 @@ public class ProMallController extends BaseController {
         if (StrUtil.isBlank(bo.getCpType())){
             return AjaxResult.error("参数错误");
         }
+
+        // 赋值自己的key和推广PID
+        bo.setApikey(API_KEY);
+        bo.setPid(PID);
+
         switch (bo.getCpType()){
             case "pdd":
                 return togetherService.buyTogetherDetail(bo);
@@ -75,6 +86,11 @@ public class ProMallController extends BaseController {
         if (StrUtil.isBlank(bo.getCpType())){
             return AjaxResult.error("参数错误");
         }
+
+        // 赋值自己的key和推广PID
+        bo.setApikey(API_KEY);
+        bo.setPid(PID);
+
         switch (bo.getCpType()){
             case "pdd":
                 return togetherService.buyTogetherTurnChain(bo);
