@@ -80,7 +80,7 @@ public class ProMallController extends BaseController {
     /**
      * 商城商品推广
      */
-    @ApiOperation("查询商城内容列表")
+    @ApiOperation("商城商品推广")
     @GetMapping("/mallTurnChain")
     public AjaxResult mallTurnChain(MallQueryBo bo){
         if (StrUtil.isBlank(bo.getCpType())){
