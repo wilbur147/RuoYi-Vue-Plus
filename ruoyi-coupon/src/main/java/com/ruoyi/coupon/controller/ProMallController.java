@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
+
 /**
  * 商城购物 Controller
  * 
@@ -98,5 +100,17 @@ public class ProMallController extends BaseController {
             default:
         }
         return AjaxResult.error("推广错误");
+    }
+
+
+    /**
+     * 商品搜索热词推送
+     */
+    @ApiOperation("商品搜索热词推送")
+    @GetMapping("/mallHotKeywords")
+    public AjaxResult mallHotKeywords(){
+        String [] keyWords = new String[]{"粽子","休闲时尚T恤","居家必备洗衣机","撸串聚会绝配啤酒","仙女必入超显白口红",
+                "智能空调","夏季必备小电扇","办公家具必买清单"};
+        return AjaxResult.success("获取关键词成功", Arrays.asList(keyWords));
     }
 }
