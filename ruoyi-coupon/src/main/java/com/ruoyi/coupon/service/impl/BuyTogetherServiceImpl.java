@@ -1,9 +1,7 @@
 package com.ruoyi.coupon.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONNull;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -14,8 +12,6 @@ import com.ruoyi.coupon.vo.MallVo;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Wilbur
@@ -47,22 +43,27 @@ public class BuyTogetherServiceImpl implements IBuyTogetherService {
             MallVo mallVo;
             JSONArray goodsList = JSONUtil.createArray();
             for (JSONObject data : jsonArray.jsonIter()) {
-                String price = data.get("min_normal_price").toString();
-                String discount = data.get("coupon_discount").toString();
-                // 计算券后价
-                BigDecimal priceAfter = new BigDecimal(price)
-                        .subtract(new BigDecimal(discount));
+				// 原价
+				String price = data.get("min_normal_price").toString();
+				// 拼购价格
+				String pricePg = data.get("min_group_price").toString();
+				String discount = data.get("coupon_discount").toString();
+				// 计算券后价
+				BigDecimal priceAfter = new BigDecimal(pricePg)
+					.subtract(new BigDecimal(discount));
                 mallVo = new MallVo()
                         .setGoodsId(data.get("goods_sign").toString())
                         .setGoodsName(data.get("goods_name").toString())
                         .setImg(data.get("goods_thumbnail_url").toString())
-                        .setPrice(price)
+                        .setPrice(pricePg)
                         .setDiscount(discount)
                         .setPriceAfter(priceAfter.toString())
                         .setSales(data.get("sales_tip").toString());
                 goodsList.add(mallVo);
             }
-            return AjaxResult.success("获取成功",JSONUtil.createObj().put("searchId",resObj.get("search_id"))
+            return AjaxResult.success("获取成功",JSONUtil.createObj()
+				.putOnce("searchId",resObj.get("search_id"))
+				.putOnce("total", resObj.get("total_count"))
                     .putIfAbsent("goodsList",goodsList));
         }
         return AjaxResult.error();
@@ -80,20 +81,22 @@ public class BuyTogetherServiceImpl implements IBuyTogetherService {
         JSONObject obj = JSONUtil.parseObj(result);
         if (200 == Integer.parseInt(obj.get("status_code").toString())) {
             JSONObject data = JSONUtil.parseObj(obj.get("data"));
+			// 原价
             String price = data.get("min_normal_price").toString();
+            // 拼购价格
+            String pricePg = data.get("min_group_price").toString();
             String discount = data.get("coupon_discount").toString();
             // 计算券后价
-            BigDecimal priceAfter = new BigDecimal(price)
+            BigDecimal priceAfter = new BigDecimal(pricePg)
                     .subtract(new BigDecimal(discount));
             // 得到图集
-            String[] urls = data.get("goods_gallery_urls").toString().replace("\"","").split(",");
             MallVo mallVo = new MallVo()
                     .setGoodsId(data.get("goods_sign").toString())
                     .setGoodsName(data.get("goods_name").toString())
                     .setGoodsDesc(data.get("goods_desc").toString())
                     .setImg(data.get("goods_image_url").toString())
                     .setImges(data.get("goods_gallery_urls"))
-                    .setPrice(price)
+                    .setPrice(pricePg)
                     .setDiscount(discount)
                     .setPriceAfter(priceAfter.toString())
                     .setSales(data.get("sales_tip").toString())

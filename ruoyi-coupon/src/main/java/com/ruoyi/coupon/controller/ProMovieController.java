@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 /**
  * 影票 Controller
- * 
+ *
  * @author ruoyi
  * @date 2021-05-25
  */
