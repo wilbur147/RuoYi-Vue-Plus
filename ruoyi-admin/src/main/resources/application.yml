@@ -14,14 +14,16 @@ ruoyi:
   addressEnabled: false
 
 captcha:
+  # 验证码开关
+  enabled: true
   # 验证码类型 math 数组计算 char 字符验证
-  captchaType: math
+  type: math
   # line 线段干扰 circle 圆圈干扰 shear 扭曲干扰
-  captchaCategory: circle
+  category: circle
   # 数字验证码位数
-  captchaNumberLength: 1
+  numberLength: 1
   # 字符验证码长度
-  captchaCharLength: 4
+  charLength: 4
 
 # 开发环境配置
 server:
@@ -97,6 +99,7 @@ token:
 # MyBatisPlus配置
 # https://baomidou.com/config/
 mybatis-plus:
+  mapperPackage: com.ruoyi.**.mapper
   # 对应的 XML 文件位置
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 实体扫描，多个package用逗号或者分号分隔
@@ -194,6 +197,11 @@ swagger:
   description: '描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...'
   # 版本
   version: '版本号: ${ruoyi-vue-plus.version}'
+  # 作者信息
+  contact:
+    name: Weiye
+    email: wkc120796@163.com
+    url: https://github.com/wilbur147/RuoYi-Vue-Plus
 
 # 防止XSS攻击
 xss:
@@ -205,7 +213,7 @@ xss:
   urlPatterns: /system/*,/monitor/*,/tool/*
 
 # 全局线程池相关配置
-threadPoolConfig:
+thread-pool:
   # 是否开启线程池
   enabled: false
   # 核心线程池大小

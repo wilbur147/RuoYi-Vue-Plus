@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * 自定义注解为有文件唯一码的类赋值文件路径
- * 
+ *
  * @author weiye
  *
  */

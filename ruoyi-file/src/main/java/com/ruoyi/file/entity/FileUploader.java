@@ -54,7 +54,7 @@ public class FileUploader extends Model<FileUploader> {
     private Date updateTime;
 
     @Override
-    protected Serializable pkVal() {
+	public Serializable pkVal() {
         return this.fileId;
     }
 

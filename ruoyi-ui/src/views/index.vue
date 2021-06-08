@@ -80,9 +80,73 @@
             <span>更新日志</span>
           </div>
           <el-collapse accordion>
+            <el-collapse-item title="v2.3.1 - 2021-6-4">
+              <ol>
+                <li>add 增加 redisson 分布式锁 注解与demo案例</li>
+                <li>add 增加 Oracle 分支</li>
+                <li>update 优化 redis 空密码兼容性</li>
+                <li>update 优化前端代码生成按钮增加 loading</li>
+                <li>fix 修复 redisson 不能批量删除的bug</li>
+                <li>fix 修复表单构建选择下拉选择控制台报错问题</li>
+                <li>fix 修复 vo 代码生成 主键列表显示 重复生成bug</li>
+                <li>fix 修复上传路径 win 打包编译为 win 路径, linux 报错bug</li>
+              </ol>
+            </el-collapse-item>
+            <el-collapse-item title="v2.3.0 - 2021-6-1">
+              <ol>
+                <li>add 升级 luttuce 为 redisson 性能更强 工具更全</li>
+                <li>add 增加测试数据sql文件</li>
+                <li>add 增加demo模块 单表演示案例(包含数据权限)</li>
+                <li>update 完美修复 数据权限功能(支持单表多表过滤)</li>
+                <li>update 优化代码生成模板</li>
+                <li>update 优化 system 模块 批量操作性能</li>
+              </ol>
+            </el-collapse-item>
+            <el-collapse-item title="v2.2.1 - 2021-5-29">
+              <ol>
+                <li>add 增加 security 权限框架 @Async 异步注解配置</li>
+                <li>update 优化dataScope参数防止注入</li>
+                <li>update 优化参数&字典缓存操作</li>
+                <li>update 增加修改包名文档</li>
+                <li>update 文档增加演示图例</li>
+                <li>fix 修复部门类sql符号错误</li>
+              </ol>
+            </el-collapse-item>
+            <el-collapse-item title="v2.2.0 - 2021-5-25">
+              <ol>
+                <li>同步升级 RuoYi-Vue 3.5.0</li>
+                <li>add 增加验证码开关</li>
+                <li>add 新增IE浏览器版本过低提示页面</li>
+                <li>update 升级druid到最新版本v1.2.6</li>
+                <li>update 升级fastjson到最新版1.2.76</li>
+                <li>update 修改bo加入判断是否设置必填再加载必填注解</li>
+                <li>update 生成vue模板导出按钮点击后添加遮罩</li>
+                <li>update Redis设置HashKey序列化</li>
+                <li>update 优化Redis序列化配置</li>
+                <li>fix 修复代码生成器中表字段取消必填无法更新问题</li>
+              </ol>
+            </el-collapse-item>
+            <el-collapse-item title="v2.1.2 - 2021-5-21">
+              <ol>
+                <li>update springboot 升级 2.3.11</li>
+                <li>update mybatis-plus 升级 3.4.3 分页Plus对象适配更新</li>
+                <li>update 验证码生成更新为无符号整数计算</li>
+                <li>update 请求响应对象 与 分页对象 结构修改 适配接口文档配置</li>
+                <li>update swagger增加请求前缀</li>
+              </ol>
+            </el-collapse-item>
+            <el-collapse-item title="v2.1.1 - 2021-5-19">
+              <ol>
+                <li>update 配置统一提取为 properties 配置类</li>
+                <li>update 分页工具 删除过期方法</li>
+                <li>update admin 实时监控日志 改为保留一天</li>
+                <li>fix 修复swagger开关无法控制关闭问题</li>
+                <li>fix maven install 异常</li>
+              </ol>
+            </el-collapse-item>
             <el-collapse-item title="v2.1.0 - 2021-5-17">
               <ol>
-                <li>update swagger升级3.0.2</li>
+                <li>update knife4j升级3.0.2</li>
                 <li>update 增强分页工具兼容性</li>
                 <li>update 通用Service接口 增加自定义vo转换函数</li>
                 <li>remove 移除ruoyi自带服务监控(Admin已全部包含)</li>
@@ -143,12 +207,14 @@
 </template>
 
 <script>
+import config from '../../package.json'
+
 export default {
   name: "index",
   data() {
     return {
       // 版本号
-      version: "2.1.0",
+      version: config.version,
     };
   },
   methods: {

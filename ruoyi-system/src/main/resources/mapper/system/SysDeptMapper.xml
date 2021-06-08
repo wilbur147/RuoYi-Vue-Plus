@@ -40,7 +40,9 @@
             AND status = #{status}
         </if>
         <!-- 数据范围过滤 -->
-        ${params.dataScope}
+        <if test="params.dataScope != null and params.dataScope != ''">
+            AND ( ${params.dataScope} )
+        </if>
         order by d.parent_id, d.order_num
     </select>
 
@@ -49,11 +51,23 @@
         from sys_dept d
         left join sys_role_dept rd on d.dept_id = rd.dept_id
         where rd.role_id = #{roleId}
-        <if test="deptCheckStrictly">
-            and d.dept_id not in (select d.parent_id from sys_dept d inner join sys_role_dept rd on d.dept_id =
-            rd.dept_id and rd.role_id = #{roleId})
-        </if>
+            <if test="deptCheckStrictly">
+                and d.dept_id not in (select d.parent_id from sys_dept d inner join sys_role_dept rd on d.dept_id = rd.dept_id and rd.role_id = #{roleId})
+            </if>
         order by d.parent_id, d.order_num
     </select>
 
-</mapper> 
+    <update id="updateDeptChildren" parameterType="java.util.List">
+        update sys_dept set ancestors =
+        <foreach collection="depts" item="item" index="index"
+                 separator=" " open="case dept_id" close="end">
+            when #{item.deptId} then #{item.ancestors}
+        </foreach>
+        where dept_id in
+        <foreach collection="depts" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.deptId}
+        </foreach>
+    </update>
+
+</mapper>

@@ -131,6 +131,7 @@
               plain
               icon="el-icon-download"
               size="mini"
+              :loading="exportLoading"
               @click="handleExport"
               v-hasPermi="['system:user:export']"
             >导出</el-button>
@@ -356,6 +357,8 @@ export default {
     return {
       // 遮罩层
       loading: true,
+      // 导出遮罩层
+      exportLoading: false,
       // 选中数组
       ids: [],
       // 非单个禁用
@@ -562,8 +565,8 @@ export default {
       this.reset();
       this.getTreeselect();
       getUser().then(response => {
-        this.postOptions = response.posts;
-        this.roleOptions = response.roles;
+        this.postOptions = response.data.posts;
+        this.roleOptions = response.data.roles;
         this.open = true;
         this.title = "添加用户";
         this.form.password = this.initPassword;
@@ -575,11 +578,11 @@ export default {
       this.getTreeselect();
       const userId = row.userId || this.ids;
       getUser(userId).then(response => {
-        this.form = response.data;
-        this.postOptions = response.posts;
-        this.roleOptions = response.roles;
-        this.form.postIds = response.postIds;
-        this.form.roleIds = response.roleIds;
+        this.form = response.data.user;
+        this.postOptions = response.data.posts;
+        this.roleOptions = response.data.roles;
+        this.form.postIds = response.data.postIds;
+        this.form.roleIds = response.data.roleIds;
         this.open = true;
         this.title = "修改用户";
         this.form.password = "";
@@ -637,10 +640,12 @@ export default {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
-        }).then(function() {
+        }).then(() => {
+          this.exportLoading = true;
           return exportUser(queryParams);
         }).then(response => {
           this.download(response.msg);
+          this.exportLoading = false;
         })
     },
     /** 导入按钮操作 */
