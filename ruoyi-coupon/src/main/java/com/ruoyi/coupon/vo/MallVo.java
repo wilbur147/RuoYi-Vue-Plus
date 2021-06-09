@@ -1,13 +1,10 @@
 package com.ruoyi.coupon.vo;
 
-import com.ruoyi.common.annotation.Excel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
-import java.util.List;
 
 
 /**
@@ -66,6 +63,9 @@ public class MallVo {
 
 	@ApiModelProperty("商家服务分")
 	private String avgServ;
+
+	@ApiModelProperty("优惠券链接")
+	private String couponUrl;
 
 	@ApiModelProperty("商家服务分")
 	private Object weChatInfo;

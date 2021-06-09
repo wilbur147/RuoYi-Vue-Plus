@@ -30,12 +30,16 @@ public class MallQueryBo {
 	private String cpType;
 	@ApiModelProperty("分类标签")
 	private Long catId;
-	@ApiModelProperty("排序方式")
+	@ApiModelProperty("筛选方式")
 	private Integer sortType;
+	@ApiModelProperty("排序方式")
+	private String sort;
 	@ApiModelProperty("搜索id")
 	private String searchId;
 	@ApiModelProperty("是否只返回优惠券的商品")
 	private String withCoupon;
+	@ApiModelProperty("优惠券链接")
+	private String couponUrl;
 
 	@ApiModelProperty("蚂蚁星球KEY")
 	private String apikey;
