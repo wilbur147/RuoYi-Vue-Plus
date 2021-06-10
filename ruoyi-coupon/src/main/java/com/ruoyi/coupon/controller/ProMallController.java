@@ -6,9 +6,9 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.coupon.bo.MallQueryBo;
 import com.ruoyi.coupon.service.IBuyTogetherService;
 import com.ruoyi.coupon.service.IJingDongService;
+import com.ruoyi.coupon.service.IVipshopService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,18 +25,19 @@ import java.util.Arrays;
  */
 @Slf4j
 @Api(value = "商城控制器", tags = {"商城内容管理"})
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RestController
 @RequestMapping("/program/mall")
 public class ProMallController extends BaseController {
     private final String PDD_PID = "13957782_210518982";
     private final String JD_PID = "3003723200";
+    private final String WPH_PID = "8df750b7fed3ca716d4e8f56e4e11b8b";
     private final String API_KEY = "607d259324479dcf";
-
-    @Autowired
+	@Autowired
     private IBuyTogetherService togetherService;
-    @Autowired
+	@Autowired
     private IJingDongService jingDongService;
+	@Autowired
+    private IVipshopService vipshopService;
 
     /**
      * 商城商品列表
@@ -55,6 +56,8 @@ public class ProMallController extends BaseController {
                 return togetherService.buyTogetherList(bo);
 			case "jd":
                 return jingDongService.jdList(bo);
+			case "wph":
+                return vipshopService.wphList(bo);
             default:
         }
         return AjaxResult.error("查询错误");
@@ -77,6 +80,8 @@ public class ProMallController extends BaseController {
                 return togetherService.buyTogetherDetail(bo);
 			case "jd":
 				return jingDongService.jdDetail(bo);
+			case "wph":
+				return vipshopService.wphDetail(bo);
             default:
         }
         return AjaxResult.error("查询错误");
@@ -100,6 +105,9 @@ public class ProMallController extends BaseController {
 			case "jd":
 				bo.setPid(JD_PID);
 				return jingDongService.jdTurnChain(bo);
+			case "wph":
+				bo.setPid(WPH_PID);
+				return vipshopService.wphTurnChain(bo);
             default:
         }
         return AjaxResult.error("推广错误");

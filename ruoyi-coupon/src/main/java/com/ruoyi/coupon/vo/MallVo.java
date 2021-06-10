@@ -67,7 +67,7 @@ public class MallVo {
 	@ApiModelProperty("优惠券链接")
 	private String couponUrl;
 
-	@ApiModelProperty("商家服务分")
+	@ApiModelProperty("推广小程序信息")
 	private Object weChatInfo;
 
 
