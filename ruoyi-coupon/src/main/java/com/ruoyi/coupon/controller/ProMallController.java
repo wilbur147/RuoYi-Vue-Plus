@@ -1,6 +1,9 @@
 package com.ruoyi.coupon.controller;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.coupon.bo.MallQueryBo;
@@ -38,6 +41,72 @@ public class ProMallController extends BaseController {
     private IJingDongService jingDongService;
 	@Autowired
     private IVipshopService vipshopService;
+
+	/**
+	 * 商城商品列表
+	 */
+	@ApiOperation("查询商城首页")
+	@GetMapping("/mallIndex")
+	public AjaxResult mallIndex(){
+		// toType：0 不作任何动作  1 跳转商品列表  2 跳转其它小程序
+
+		// 商城首页第一层广告图
+		JSONObject adOne = JSONUtil.createObj();
+		adOne.putOnce("src","../../static/shop/o_1f73id996g9mfok1bc4tsg51312.png")
+			.putOnce("item",JSONUtil.createObj()
+			.putOnce("toType",0));
+		// 商城首页多栏功能列表
+		JSONArray features = JSONUtil.createArray();
+		features.add(JSONUtil.createObj()
+			.putOnce("src","../../static/shop/o_1f55hj3cc84e17vh4gq1em71ahn1c.png")
+			.putOnce("toType",1)
+			.putOnce("toPath",JSONUtil.createObj()
+				.putOnce("title","拼多多全网优惠")
+				.putOnce("jumpType","pdd")
+				.putOnce("page_path","pages/shop-list/shop-list")
+			)
+		);
+		features.add(JSONUtil.createObj()
+			.putOnce("src","../../static/shop/o_1f55hjjre1snkf5e77s18us1hde1h.png")
+			.putOnce("toType",1)
+			.putOnce("toPath",JSONUtil.createObj()
+				.putOnce("title","京东全网优惠")
+				.putOnce("jumpType","jd")
+				.putOnce("page_path","pages/shop-list/shop-list")
+			)
+		);
+		features.add(JSONUtil.createObj()
+			.putOnce("src","../../static/shop/o_1f55hjtp535q4b2br6cni18do1m.png")
+			.putOnce("toType",1)
+			.putOnce("toPath",JSONUtil.createObj()
+				.putOnce("title","唯品会全网优惠")
+				.putOnce("jumpType","wph")
+				.putOnce("page_path","pages/shop-list/shop-list")
+			)
+		);
+		features.add(JSONUtil.createObj()
+			.putOnce("src","../../static/shop/o_1f55hk4bciso1fbl93h6ka17v1r.png")
+			.putOnce("toType",2)
+			.putOnce("toPath",JSONUtil.createObj()
+				.putOnce("app_id","wxa918198f16869201")
+				.putOnce("page_path","/pages/web/web?specialUrl=1&src=https%3A%2F%2Fmobile.yangkeduo.com%2Fduo_transfer_channel.html%3FresourceType%3D39997%26pid%3D13957782_210518982%26authDuoId%3D200005%26cpsSign%3DCE_210611_13957782_210518982_e238ad1ef824d1380c5be9823e0276be%26duoduo_type%3D2")
+			)
+		);
+		// 商城首页第二层广告图
+		JSONObject adSecond = JSONUtil.createObj();
+		adSecond.putOnce("src","../../static/shop/o_1f5il8ed71bs913pta30ttakp612.gif")
+			.putOnce("item",JSONUtil.createObj()
+				.putOnce("toType",2).putOnce("toPath",JSONUtil.createObj()
+				.putOnce("app_id","wxa918198f16869201")
+				.putOnce("page_path","/pages/web/web?specialUrl=1&src=https%3A%2F%2Fmobile.yangkeduo.com%2Fduo_transfer_channel.html%3FresourceType%3D39997%26pid%3D13957782_210518982%26authDuoId%3D200005%26cpsSign%3DCE_210611_13957782_210518982_e238ad1ef824d1380c5be9823e0276be%26duoduo_type%3D2")));
+
+
+		return AjaxResult.success(JSONUtil.createObj()
+			.putOnce("adOne",adOne)
+			.putOnce("features",features)
+			.putOnce("adSecond",adSecond));
+	}
+
 
     /**
      * 商城商品列表
