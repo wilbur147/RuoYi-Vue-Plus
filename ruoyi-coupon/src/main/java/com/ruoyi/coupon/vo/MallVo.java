@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 
 /**
- * 影票视图对象
+ * 商品视图对象
  *
  * @author ruoyi
  * @date 2021-05-24

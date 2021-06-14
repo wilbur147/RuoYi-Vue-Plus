@@ -10,24 +10,47 @@ import com.ruoyi.coupon.bo.MallQueryBo;
  **/
 public interface IJingDongService {
 
-    /**
-     * 京东类目商品列表
-     * @param bo 参数
-     * @return
-     */
-    AjaxResult jdList(MallQueryBo bo);
+	/**
+	 * 京东类目商品列表
+	 *
+	 * @param bo 参数
+	 * @return
+	 */
+	AjaxResult jdList(MallQueryBo bo);
 
-    /**
-     * 京东商品详情
-     * @return
-     */
-    AjaxResult jdDetail(MallQueryBo bo);
+	/**
+	 * 京东类目运营频道数据
+	 *
+	 * @param bo 参数
+	 * @return
+	 */
+	AjaxResult mallChannelList(MallQueryBo bo);
 
-    /**
-     * 京东商品转链跳转
-     * @return
-     */
-    AjaxResult jdTurnChain(MallQueryBo bo);
+	/**
+	 * 京东商品详情
+	 *
+	 * @return
+	 */
+	AjaxResult jdDetail(MallQueryBo bo);
 
+	/**
+	 * 京东商品转链跳转
+	 *
+	 * @return
+	 */
+	AjaxResult jdTurnChain(MallQueryBo bo);
 
+	/**
+	 * 京东商品分类
+	 *
+	 * @return
+	 */
+	AjaxResult jdClass(MallQueryBo bo);
+
+	/**
+	 * 京东二级商城图标
+	 *
+	 * @return
+	 */
+	AjaxResult mallSecondIcon(MallQueryBo bo);
 }
