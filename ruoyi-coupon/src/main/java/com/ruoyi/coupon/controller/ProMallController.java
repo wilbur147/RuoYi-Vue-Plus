@@ -6,6 +6,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.coupon.bo.MallQueryBo;
 import com.ruoyi.coupon.service.IBuyTogetherService;
 import com.ruoyi.coupon.service.IJingDongService;
@@ -41,6 +42,8 @@ public class ProMallController extends BaseController {
 	private IJingDongService jingDongService;
 	@Autowired
 	private IVipshopService vipshopService;
+	@Autowired
+	private RedisCache redisCache;
 
 	/**
 	 * 商城商品列表
@@ -51,87 +54,20 @@ public class ProMallController extends BaseController {
 		// toType：0 不作任何动作  1 跳转商品列表  2 跳转其它小程序
 
 		// 商城首页第一层广告图
-		JSONObject adOne = JSONUtil.createObj();
-		adOne.putOnce("src", "../../static/shop/o_1f73id996g9mfok1bc4tsg51312.png")
-			.putOnce("item", JSONUtil.createObj()
-				.putOnce("toType", 0));
-		// 商城首页多栏功能列表
-		JSONArray features = JSONUtil.createArray();
-		features.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1f55hj3cc84e17vh4gq1em71ahn1c.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "拼多多")
-				.putOnce("jumpType", "pdd")
-				.putOnce("page_path", "../shop-second-page/shop-second-page")
-			)
-		);
-		features.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1f55hjjre1snkf5e77s18us1hde1h.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "京东")
-				.putOnce("jumpType", "jd")
-				.putOnce("page_path", "../shop-second-page/shop-second-page")
-			)
-		);
-		features.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1f55hjtp535q4b2br6cni18do1m.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "唯品会")
-				.putOnce("jumpType", "wph")
-				.putOnce("page_path", "../shop-second-page/shop-second-page")
-			)
-		);
-		features.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1f55hk4bciso1fbl93h6ka17v1r.png")
-			.putOnce("toType", 2)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("app_id", "wxa918198f16869201")
-				.putOnce("page_path", "/pages/web/web?specialUrl=1&src=https%3A%2F%2Fmobile.yangkeduo.com%2Fduo_transfer_channel.html%3FresourceType%3D39997%26pid%3D13957782_210518982%26authDuoId%3D200005%26cpsSign%3DCE_210611_13957782_210518982_e238ad1ef824d1380c5be9823e0276be%26duoduo_type%3D2")
-			)
-		);
-		// 商城首页第二层广告图
-		JSONObject adSecond = JSONUtil.createObj();
-		adSecond.putOnce("src", "../../static/shop/o_1f5il8ed71bs913pta30ttakp612.gif")
-			.putOnce("item", JSONUtil.createObj()
-				.putOnce("toType", 2).putOnce("toPath", JSONUtil.createObj()
-					.putOnce("app_id", "wxa918198f16869201")
-					.putOnce("page_path", "/pages/web/web?specialUrl=1&src=https%3A%2F%2Fmobile.yangkeduo.com%2Fduo_transfer_channel.html%3FresourceType%3D39997%26pid%3D13957782_210518982%26authDuoId%3D200005%26cpsSign%3DCE_210611_13957782_210518982_e238ad1ef824d1380c5be9823e0276be%26duoduo_type%3D2")));
+		String adOneKey = "coupon:shop:index:adOne";
+		JSONObject adOne = JSONUtil.parseObj(redisCache.getCacheObject(adOneKey).toString());
 
-		// 广告大图三张
-		JSONArray bigAdImges = JSONUtil.createArray();
-		bigAdImges.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1f2j4g85brqh8cl1jg916n2ung17.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "新人特惠")
-				.putOnce("jumpType", "pdd")
-				.putOnce("page_path", "../shop-list/shop-list")
-				.putOnce("channelType", "1")
-			)
-		);
-		bigAdImges.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1f2j4gkvf1uuu14f01c9uids81n1c.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "今日爆款")
-				.putOnce("jumpType", "pdd")
-				.putOnce("page_path", "../shop-list/shop-list")
-				.putOnce("channelType", "3")
-			)
-		);
-		bigAdImges.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1f2j4h3upn5b158ludf16bhqmp1h.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "大额优惠")
-				.putOnce("jumpType", "pdd")
-				.putOnce("page_path", "../shop-list/shop-list")
-				.putOnce("channelType", "7")
-			)
-		);
+		// 商城首页多栏功能列表
+		String featuresKey = "coupon:shop:index:features";
+		JSONArray features = JSONUtil.parseArray(redisCache.getCacheObject(featuresKey).toString());
+
+		// 商城首页第二层广告图
+		String adSecondKey = "coupon:shop:index:adSecond";
+		JSONObject adSecond = JSONUtil.parseObj(redisCache.getCacheObject(adSecondKey).toString());
+
+		//	广告大图三张
+		String bigAdImgesKey = "coupon:shop:index:bigAdImges";
+		JSONArray bigAdImges = JSONUtil.parseArray(redisCache.getCacheObject(bigAdImgesKey).toString());
 		return AjaxResult.success(JSONUtil.createObj()
 			.putOnce("adOne", adOne)
 			.putOnce("features", features)
@@ -291,7 +227,7 @@ public class ProMallController extends BaseController {
 	@ApiOperation("商品搜索热词推送")
 	@GetMapping("/mallHotKeywords")
 	public AjaxResult mallHotKeywords() {
-		String[] keyWords = new String[]{"粽子", "休闲时尚T恤", "居家必备洗衣机", "撸串聚会绝配啤酒", "仙女必入超显白口红",
+		String[] keyWords = new String[]{"口罩医用", "洁柔", "休闲时尚T恤", "居家必备洗衣机", "撸串聚会绝配啤酒", "仙女必入超显白口红",
 			"智能空调", "夏季必备小电扇", "办公家具必买清单"};
 		return AjaxResult.success("获取关键词成功", Arrays.asList(keyWords));
 	}

@@ -13,11 +13,13 @@ import com.pdd.pop.sdk.http.PopHttpClient;
 import com.pdd.pop.sdk.http.api.pop.request.PddDdkGoodsSearchRequest;
 import com.pdd.pop.sdk.http.api.pop.response.PddDdkGoodsSearchResponse;
 import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.coupon.bo.MallQueryBo;
 import com.ruoyi.coupon.service.IBuyTogetherService;
 import com.ruoyi.coupon.utils.BeanToHttpUrl;
 import com.ruoyi.coupon.vo.MallClassVo;
 import com.ruoyi.coupon.vo.MallVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -37,6 +39,10 @@ public class BuyTogetherServiceImpl implements IBuyTogetherService {
 	private final String clientSecret = "950208c4ea788f527271a274cf04526ddbf58b7d";
 	private String accessToken = "your accessToken";
 	PopClient client = new PopHttpClient(clientId, clientSecret);
+
+	@Autowired
+	private RedisCache redisCache;
+
 
 	@Override
 	public AjaxResult buyTogetherList(MallQueryBo bo) {
@@ -361,46 +367,8 @@ public class BuyTogetherServiceImpl implements IBuyTogetherService {
 
 	@Override
 	public AjaxResult mallSecondIcon(MallQueryBo bo) {
-		JSONArray features = JSONUtil.createArray();
-		features.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1erfuhqgr17le78q8bo15k611sf1c.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "9.9包邮")
-				.putOnce("jumpType", "pdd")
-				.putOnce("page_path", "../shop-list/shop-list")
-				.putOnce("channelType", "1")
-			)
-		);
-		features.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1erfufep7gp1fff18r18bumiu12.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "火爆热卖")
-				.putOnce("jumpType", "pdd")
-				.putOnce("page_path", "../shop-list/shop-list")
-				.putOnce("channelType", "2")
-			)
-		);
-		features.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1erfuikklq651rp5mov7641nic1h.png")
-			.putOnce("toType", 1)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "今日热销")
-				.putOnce("jumpType", "pdd")
-				.putOnce("page_path", "../shop-list/shop-list")
-				.putOnce("channelType", "3")
-			)
-		);
-		features.add(JSONUtil.createObj()
-			.putOnce("src", "../../static/shop/o_1erfuj91s5k312akhrb1tt91gei1m.png")
-			.putOnce("toType", 2)
-			.putOnce("toPath", JSONUtil.createObj()
-				.putOnce("title", "百亿补贴")
-				.putOnce("app_id", "wxa918198f16869201")
-				.putOnce("page_path", "/pages/web/web?specialUrl=1&src=https%3A%2F%2Fmobile.yangkeduo.com%2Fduo_transfer_channel.html%3FresourceType%3D39997%26pid%3D13957782_210518982%26authDuoId%3D200005%26cpsSign%3DCE_210611_13957782_210518982_e238ad1ef824d1380c5be9823e0276be%26duoduo_type%3D2")
-			)
-		);
+		String featuresKey = "coupon:shop:secondIcon:pdd";
+		JSONArray features = JSONUtil.parseArray(redisCache.getCacheObject(featuresKey).toString());
 		return AjaxResult.success(JSONUtil.createObj()
 			.putOnce("features", features));
 	}
