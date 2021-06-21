@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-
 /**
  * 商城购物 Controller
  *
@@ -33,7 +31,7 @@ import java.util.Arrays;
 @RequestMapping("/program/mall")
 public class ProMallController extends BaseController {
 	private final String PDD_PID = "13957782_210518982";
-	private final String JD_PID = "3003723200";
+	private final String JD_PID = "30018";
 	private final String WPH_PID = "8df750b7fed3ca716d4e8f56e4e11b8b";
 	private final String API_KEY = "607d259324479dcf";
 	@Autowired
@@ -227,9 +225,10 @@ public class ProMallController extends BaseController {
 	@ApiOperation("商品搜索热词推送")
 	@GetMapping("/mallHotKeywords")
 	public AjaxResult mallHotKeywords() {
-		String[] keyWords = new String[]{"口罩医用", "洁柔", "休闲时尚T恤", "居家必备洗衣机", "撸串聚会绝配啤酒", "仙女必入超显白口红",
-			"智能空调", "夏季必备小电扇", "办公家具必买清单"};
-		return AjaxResult.success("获取关键词成功", Arrays.asList(keyWords));
+//		String[] keyWords = new String[]{"口罩医用", "洁柔", "休闲时尚T恤", "居家必备洗衣机", "撸串聚会绝配啤酒", "仙女必入超显白口红",
+//			"智能空调", "夏季必备小电扇", "办公家具必买清单"};
+		String keyWordsKey = "coupon:search:keywords";
+		return AjaxResult.success("获取关键词成功", JSONUtil.parseArray(redisCache.getCacheObject(keyWordsKey).toString()));
 	}
 
 
