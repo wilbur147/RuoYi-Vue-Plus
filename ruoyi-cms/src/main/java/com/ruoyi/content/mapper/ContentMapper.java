@@ -1,7 +1,7 @@
 package com.ruoyi.content.mapper;
 
+import com.ruoyi.common.core.mybatisplus.core.BaseMapperPlus;
 import com.ruoyi.content.domain.Content;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * 内容Mapper接口
@@ -9,6 +9,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author ruoyi
  * @date 2021-05-12
  */
-public interface ContentMapper extends BaseMapper<Content> {
+public interface ContentMapper extends BaseMapperPlus<Content> {
 
 }

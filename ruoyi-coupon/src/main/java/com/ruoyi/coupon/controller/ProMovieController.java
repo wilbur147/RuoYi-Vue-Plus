@@ -10,7 +10,6 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.redis.RedisCache;
@@ -200,7 +199,7 @@ public class ProMovieController extends BaseController {
         if (Validator.isNotEmpty(obj) && 200 == Integer.parseInt(obj.get("code").toString())){
             List<MovieVo> resArr = new ArrayList<>();
             JSONObject data = JSONUtil.parseObj(obj.get("data"));
-            JSONArray arr = JSONUtil.parseArray(JSON.toJSON(data.get("list")));
+            JSONArray arr = JSONUtil.parseArray(JSONUtil.toJsonStr(data.get("list")));
             MovieVo movieVo = null;
             for (Object item : arr) {
                 JSONObject jsonObject = JSONUtil.parseObj(item);

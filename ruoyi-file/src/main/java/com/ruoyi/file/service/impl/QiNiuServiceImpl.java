@@ -5,7 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSONUtil;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
@@ -80,7 +80,7 @@ public class QiNiuServiceImpl implements IQiNiuService {
             Response response = uploadManager.put(file, rootPath, upToken, null, null);
 
             //解析上传成功的结果
-            DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
+            DefaultPutRet putRet = JSONUtil.toBean(response.bodyString(), DefaultPutRet.class);
             fileUploader.setStorageType(SystemConfigConstants.SYS_FILE_PRIORITY_QINIU);
             fileUploader.setUploadStartTime(startTime);
             fileUploader.setUploadEndTime(new Date());

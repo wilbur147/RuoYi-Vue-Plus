@@ -7,8 +7,8 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.annotation.SetFilePath;
+import com.ruoyi.common.core.mybatisplus.core.ServicePlusImpl;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.content.bo.ConCategroyQueryBo;
@@ -35,7 +35,7 @@ import java.util.List;
  * @date 2021-05-12
  */
 @Service
-public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> implements IContentService {
+public class ContentServiceImpl extends ServicePlusImpl<ContentMapper, Content> implements IContentService {
 
     @Autowired
     private IConCategroyService categroyService;

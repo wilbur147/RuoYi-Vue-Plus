@@ -4,13 +4,13 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.blog.domain.Blog;
 import com.ruoyi.blog.mapper.BlogMapper;
 import com.ruoyi.blog.service.IBlogService;
 import com.ruoyi.blog.service.IBlogSortService;
 import com.ruoyi.blog.service.IBlogTagService;
 import com.ruoyi.common.annotation.SetFilePath;
+import com.ruoyi.common.core.mybatisplus.core.ServicePlusImpl;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.PageUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +27,7 @@ import java.util.List;
  * @date 2021-04-13
  */
 @Service
-public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IBlogService {
+public class BlogServiceImpl extends ServicePlusImpl<BlogMapper, Blog> implements IBlogService {
 
     @Autowired
     private IBlogSortService blogSortService;

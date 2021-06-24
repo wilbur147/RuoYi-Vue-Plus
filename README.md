@@ -2,6 +2,8 @@
 [![码云Gitee](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/badge/star.svg?theme=blue)](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/blob/master/LICENSE)
 [![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-提供支持-blue.svg)](https://www.jetbrains.com/?from=RuoYi-Vue-Plus)
+[![JDK-8+](https://img.shields.io/badge/JDK-8-green.svg)]()
+[![JDK-11](https://img.shields.io/badge/JDK-11-green.svg)]()
 
 基于 RuoYi-Vue 集成 Mybatis-Plus Lombok Hutool 等便捷开发工具 适配重写相关业务 便于开发 定期与 RuoYi-Vue 同步
 * 前端开发框架 Vue、Element UI
@@ -16,7 +18,16 @@
 * 监控框架 spring-boot-admin 全方位服务监控
 * 校验框架 validation 增强接口安全性 严谨性
 * 文档框架 knife4j 美化接口文档
+* 序列化框架 统一使用 jackson 高效可靠
 * 代码生成器 一键生成前后端代码
+* 多数据源框架 dynamic-datasource 支持主从与多种类数据库异构
+* Redis客户端 采用 Redisson 性能更强
+* 分布式锁 Lock4j 注解锁、工具锁 多种多样
+
+## 参考文档
+
+使用框架前请仔细阅读文档重点注意事项  
+[参考文档 Wiki](https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/wikis/pages)
 
 ## 修改RuoYi功能
 
@@ -31,7 +42,10 @@
 * 集成 Feign 接口化管理 Http 请求(如三方请求 支付,短信,推送等)
 * 移除 自带服务监控 改为 spring-boot-admin 全方位监控
 * 增加 demo 模块示例(给不会增加模块的小伙伴做参考)
-* 增加 redisson 支持分布式锁 功能更强大
+* 增加 redisson 高性能 Redis 客户端
+* 移除 fastjson 统一使用 jackson 序列化
+* 集成 dynamic-datasource 多数据源(默认支持MySQL,其他种类需自行适配)
+* 集成 Lock4j 实现分布式 注解锁、工具锁 多种多样
 
 ### 代码改动
 
@@ -43,6 +57,9 @@
 * 项目修改为 maven多环境配置
 * 项目配置修改为 application.yml 统一管理
 * 数据权限修改为 适配支持单表、多表
+* 使用 redisson 实现分布式锁注解与工具类
+* 使用 redisson 实现 spring-cache 整合
+* 增加 mybatis-plus 二级缓存 redis 存储
 
 ### 其他
 
@@ -59,72 +76,11 @@
 <img src="https://images.gitee.com/uploads/images/2021/0525/101654_451e4523_1766278.jpeg" width="300px" height="450px" />
 <img src="https://images.gitee.com/uploads/images/2021/0525/101713_3d18b119_1766278.jpeg" width="300px" height="450px" />
 
-## 重点注意事项
-
-若依文档对事务注解的描述 [关于事务](https://doc.ruoyi.vip/ruoyi/document/htsc.html#%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86)  以下对多数据源事务做补充:
-* 同一个事务下是无法切换数据源的
-* 禁止 父方法使用 @Transactional 创建事务 子方法使用 @DataSource 切换数据源
-* 正确用法: 子方法单独创建事务 或 父方法使用 @Transactional(propagation = Propagation.REQUIRES_NEW) 为所有子方法创建新事务
-
-关于如何使用Tomcat
-* 查看ruoyi-framework模块的pom.xml文件,根据注释更改依赖
-* 查看ruoyi-admin模块中的application.yml文件,根据注释更改配置
-
-关于如何创建新模块
-* 参考ruoyi-demo模块
-* 需要改动: 父pom 与 admin模块pom
-
-关于树表生成
-* 直接在mysql表中 添加 parentId orderNum 等字段(根据需要参考 TreeEntity类)
-* 代码生成选择树表生成即可
-
-关于数据权限
-* 创建表 需预留 dept_id 字段 如需用户权限 还需预留 user_id 字段
-* 支持 Mybatis-Plus 方式注入 参考 demo 模块用法(需导入 test.sql 文件)
-* 支持 XML 方式注入 参考 system 模块用法
-
 ## 新增迭代功能
 * 新增CMS内容模块（目前只有：分类、专题、文章内容）
 * 新增博客板块内容
 * 新增素材库，其它模块上传（图片、视频、音频等）内容可直接选择素材库
 * 新增公共文件上传下载模块
-
-## 修改RuoYi功能
-
-关于vue与boot整合部署  
-* [前端静态资源如何整合到后端访问](https://doc.ruoyi.vip/ruoyi-vue/other/faq.html#前端静态资源如何整合到后端访问)
-* ORM框架 使用 Mybatis-Plus 简化CRUD (目前支持单表生成与树表 不支持主子表)
-* Bean简化 使用 Lombok 简化 get set toString 等等
-* 容器改动 Tomcat 改为 并发性能更好的 undertow
-* 所有原生功能使用 Mybatis-Plus 与 Lombok 重写
-* 代码生成模板 改为适配 Mybatis-Plus 的代码
-* 代码生成模板 拆分出Vo,QueryBo,AddBo,EditBo等领域对象
-* 项目修改为 maven多环境配置
-* swagger 修改为 knife4j
-* 集成 Hutool 5.X 并重写RuoYi部分功能
-* 集成 Feign 接口化管理 Http 请求(如三方请求 支付,短信,推送等)
-* 集成 spring-boot-admin 全方位监控
-* 升级MybatisPlus 3.4.2
-* 增加demo模块示例(给不会增加模块的小伙伴做参考)
-* 同步升级 3.4.0
-* 单模块 fast 分支 https://gitee.com/JavaLionLi/RuoYi-Vue-Plus/tree/fast/
-
-## 平台简介
-
-若依是一套全部开源的快速开发平台，毫无保留给个人及企业免费使用。
-
-* 前端采用Vue、Element UI。
-* 后端采用Spring Boot、Spring Security、Redis & Jwt。
-* 权限认证使用Jwt，支持多终端认证系统。
-* 支持加载动态权限菜单，多方式轻松权限控制。
-* 高效率开发，使用代码生成器可以一键生成前后端代码。
-* 提供了单应用版本[RuoYi-Vue-fast](https://github.com/yangzongzhuan/RuoYi-Vue-fast)，Oracle版本[RuoYi-Vue-Oracle](https://github.com/yangzongzhuan/RuoYi-Vue-Oracle)，保持同步更新。
-* 不分离版本，请移步[RuoYi](https://gitee.com/y_project/RuoYi)，微服务版本，请移步[RuoYi-Cloud](https://gitee.com/y_project/RuoYi-Cloud)
-
-关于修改包名
-* 将文件夹全部修改为 com.xxx
-* 使用IDEA全局替换 com.ruoyi 替换为 com.xxx
-* 严禁手动修改
 
 ## 内置功能
 

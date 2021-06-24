@@ -1,6 +1,8 @@
 package com.ruoyi.coupon.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
@@ -359,8 +361,21 @@ public class JingDongServiceImpl implements IJingDongService {
 	@Override
 	public AjaxResult mallSecondIcon(MallQueryBo bo) {
 		String featuresKey = "coupon:shop:secondIcon:jd";
-		JSONArray featuresJd = JSONUtil.parseArray(redisCache.getCacheObject(featuresKey).toString());
+		String classFilePath = "jd-second-icon.json";
+		JSONArray features = null;
+		try {
+			features = JSONUtil.parseArray(redisCache.getCacheObject(featuresKey).toString());
+			JSONObject result = JSONUtil.createObj()
+				.putOnce("features", features);
+			FileWriter writer = new FileWriter(classFilePath);
+			writer.write(JSONUtil.toJsonStr(result));
+			return AjaxResult.success(result);
+		}catch (Exception e){
+			JSONObject data = JSONUtil.parseObj(ResourceUtil.readUtf8Str(classFilePath));
+			features = data.getJSONArray("features");
+			redisCache.setCacheObject(featuresKey,features);
+		}
 		return AjaxResult.success(JSONUtil.createObj()
-			.putOnce("features", featuresJd));
+			.putOnce("features", features));
 	}
 }

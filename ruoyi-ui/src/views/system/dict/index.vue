@@ -123,7 +123,11 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <dict-tag :options="statusOptions" :value="scope.row.status"/>
+        </template>
+      </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -257,10 +261,6 @@ export default {
         }
       );
     },
-    // 字典状态字典翻译
-    statusFormat(row, column) {
-      return this.selectDictLabel(this.statusOptions, row.status);
-    },
     // 取消按钮
     cancel() {
       this.open = false;
@@ -342,7 +342,7 @@ export default {
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        })
+        }).catch(() => {});
     },
     /** 导出按钮操作 */
     handleExport() {
@@ -357,7 +357,7 @@ export default {
         }).then(response => {
           this.download(response.msg);
           this.exportLoading = false;
-        })
+        }).catch(() => {});
     },
     /** 刷新缓存按钮操作 */
     handleRefreshCache() {

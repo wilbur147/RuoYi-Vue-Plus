@@ -1,7 +1,7 @@
 package com.ruoyi.blog.service;
 
 import com.ruoyi.blog.domain.Blog;
-import com.ruoyi.common.core.page.IServicePlus;
+import com.ruoyi.common.core.mybatisplus.core.IServicePlus;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 import java.util.List;

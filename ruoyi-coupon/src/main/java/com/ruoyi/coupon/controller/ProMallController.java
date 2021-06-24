@@ -1,5 +1,7 @@
 package com.ruoyi.coupon.controller;
 
+import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -50,22 +52,40 @@ public class ProMallController extends BaseController {
 	@GetMapping("/mallIndex")
 	public AjaxResult mallIndex() {
 		// toType：0 不作任何动作  1 跳转商品列表  2 跳转其它小程序
-
-		// 商城首页第一层广告图
+		JSONObject adOne,adSecond = null;
+		JSONArray features,bigAdImges = null;
 		String adOneKey = "coupon:shop:index:adOne";
-		JSONObject adOne = JSONUtil.parseObj(redisCache.getCacheObject(adOneKey).toString());
-
-		// 商城首页多栏功能列表
 		String featuresKey = "coupon:shop:index:features";
-		JSONArray features = JSONUtil.parseArray(redisCache.getCacheObject(featuresKey).toString());
-
-		// 商城首页第二层广告图
 		String adSecondKey = "coupon:shop:index:adSecond";
-		JSONObject adSecond = JSONUtil.parseObj(redisCache.getCacheObject(adSecondKey).toString());
-
-		//	广告大图三张
 		String bigAdImgesKey = "coupon:shop:index:bigAdImges";
-		JSONArray bigAdImges = JSONUtil.parseArray(redisCache.getCacheObject(bigAdImgesKey).toString());
+		try {
+			// 商城首页第一层广告图
+			adOne = JSONUtil.parseObj(redisCache.getCacheObject(adOneKey).toString());
+			// 商城首页多栏功能列表
+			features = JSONUtil.parseArray(redisCache.getCacheObject(featuresKey).toString());
+			// 商城首页第二层广告图
+			adSecond = JSONUtil.parseObj(redisCache.getCacheObject(adSecondKey).toString());
+			//	广告大图三张
+			bigAdImges = JSONUtil.parseArray(redisCache.getCacheObject(bigAdImgesKey).toString());
+			JSONObject result = JSONUtil.createObj()
+				.putOnce("adOne", adOne)
+				.putOnce("features", features)
+				.putOnce("adSecond", adSecond)
+				.putOnce("bigAdImges", bigAdImges);
+			FileWriter writer = new FileWriter("shop-index-icon.json");
+			writer.write(JSONUtil.toJsonStr(result));
+			return AjaxResult.success(result);
+		}catch (Exception e){
+			JSONObject data = JSONUtil.parseObj(ResourceUtil.readUtf8Str("shop-index-icon.json"));
+			adOne = data.getJSONObject("adOne");
+			features = data.getJSONArray("features");
+			adSecond = data.getJSONObject("adSecond");
+			bigAdImges = data.getJSONArray("bigAdImges");
+			redisCache.setCacheObject(adOneKey,adOne);
+			redisCache.setCacheObject(featuresKey,features);
+			redisCache.setCacheObject(adSecondKey,adSecond);
+			redisCache.setCacheObject(bigAdImgesKey,bigAdImges);
+		}
 		return AjaxResult.success(JSONUtil.createObj()
 			.putOnce("adOne", adOne)
 			.putOnce("features", features)
@@ -227,8 +247,21 @@ public class ProMallController extends BaseController {
 	public AjaxResult mallHotKeywords() {
 //		String[] keyWords = new String[]{"口罩医用", "洁柔", "休闲时尚T恤", "居家必备洗衣机", "撸串聚会绝配啤酒", "仙女必入超显白口红",
 //			"智能空调", "夏季必备小电扇", "办公家具必买清单"};
-		String keyWordsKey = "coupon:search:keywords";
-		return AjaxResult.success("获取关键词成功", JSONUtil.parseArray(redisCache.getCacheObject(keyWordsKey).toString()));
+		String classFilePath = "shop-search-keywords.json";
+		String keyWordsKey = "coupon:shop:search:keywords";
+		try {
+			JSONArray objects = JSONUtil.parseArray(redisCache.getCacheObject(keyWordsKey).toString());
+			JSONObject result = JSONUtil.createObj()
+				.putOnce("keyWords", objects);
+			FileWriter writer = new FileWriter(classFilePath);
+			writer.write(JSONUtil.toJsonStr(result));
+			return AjaxResult.success(objects);
+		}catch (Exception e){
+			JSONObject data = JSONUtil.parseObj(ResourceUtil.readUtf8Str(classFilePath));
+			JSONArray keyWords = data.getJSONArray("keyWords");
+			redisCache.setCacheObject(keyWordsKey, keyWords);
+			return AjaxResult.success("获取关键词成功", keyWords);
+		}
 	}
 
 

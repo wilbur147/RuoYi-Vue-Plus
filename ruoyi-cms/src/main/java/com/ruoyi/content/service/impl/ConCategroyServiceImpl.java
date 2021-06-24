@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.annotation.SetFilePath;
+import com.ruoyi.common.core.mybatisplus.core.ServicePlusImpl;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.utils.PageUtils;
 import com.ruoyi.content.bo.ConCategroyAddBo;
@@ -29,7 +30,7 @@ import java.util.List;
  * @date 2021-05-12
  */
 @Service
-public class ConCategroyServiceImpl extends ServiceImpl<ConCategroyMapper, ConCategroy> implements IConCategroyService {
+public class ConCategroyServiceImpl extends ServicePlusImpl<ConCategroyMapper, ConCategroy> implements IConCategroyService {
 
     @Override
     public ConCategroyVo queryById(Long conCategroyId){

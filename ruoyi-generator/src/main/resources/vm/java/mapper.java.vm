@@ -1,7 +1,9 @@
 package ${packageName}.mapper;
 
 import ${packageName}.domain.${ClassName};
-import com.ruoyi.common.core.page.BaseMapperPlus;
+import com.ruoyi.common.core.mybatisplus.core.BaseMapperPlus;
+import com.ruoyi.common.core.mybatisplus.cache.MybatisPlusRedisCache;
+import org.apache.ibatis.annotations.CacheNamespace;
 
 /**
  * ${functionName}Mapper接口
@@ -9,6 +11,8 @@ import com.ruoyi.common.core.page.BaseMapperPlus;
  * @author ${author}
  * @date ${datetime}
  */
+// 如使需切换数据源 请勿使用缓存 会造成数据不一致现象
+@CacheNamespace(implementation = MybatisPlusRedisCache.class, eviction = MybatisPlusRedisCache.class)
 public interface ${ClassName}Mapper extends BaseMapperPlus<${ClassName}> {
 
 }

@@ -1,5 +1,6 @@
 package com.ruoyi.content.mapper;
 
+import com.ruoyi.common.core.mybatisplus.core.BaseMapperPlus;
 import com.ruoyi.content.domain.ConTopic;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -9,6 +10,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author ruoyi
  * @date 2021-05-12
  */
-public interface ConTopicMapper extends BaseMapper<ConTopic> {
+public interface ConTopicMapper extends BaseMapperPlus<ConTopic> {
 
 }

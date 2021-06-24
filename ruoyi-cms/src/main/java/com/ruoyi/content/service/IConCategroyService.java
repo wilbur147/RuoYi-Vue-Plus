@@ -1,6 +1,6 @@
 package com.ruoyi.content.service;
 
-import com.ruoyi.common.core.page.IServicePlus;
+import com.ruoyi.common.core.mybatisplus.core.IServicePlus;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.content.bo.ConCategroyAddBo;
 import com.ruoyi.content.bo.ConCategroyEditBo;
